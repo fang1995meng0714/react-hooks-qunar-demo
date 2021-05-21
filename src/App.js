@@ -1,5 +1,7 @@
 import React from 'react';
+import DepartDate from './depart-date/DepartDate';
 import Header from './header/Header';
+import HighSpeed from './high-speed/HighSpeed';
 import Journey from './journey/Journey';
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
       </div>
       <form className="form" action="">
         <Journey></Journey>
+        <DepartDate></DepartDate>
+        <HighSpeed></HighSpeed>
       </form>
     </div>
   )
