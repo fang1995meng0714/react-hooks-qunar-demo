@@ -3,12 +3,13 @@ import switchImg from '../imgs/switch.svg';
 import './Journey.css';
 
 export default function Journey(props) {
+    const {from, to} = props
     return(
         <div className="journey">
             <div className="journey-station">
                 <input type="text" 
                     readOnly name="from" 
-                    value={13} 
+                    value={from} 
                     className="journey-input journey-from"
                 />
             </div>
@@ -18,7 +19,7 @@ export default function Journey(props) {
             <div className="journey-station">
                 <input type="text" 
                     readOnly name="to" 
-                    value={13} 
+                    value={to} 
                     className="journey-input journey-to"
                 />
             </div>

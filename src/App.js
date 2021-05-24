@@ -4,16 +4,13 @@ import Header from './header/Header';
 import HighSpeed from './high-speed/HighSpeed';
 import Journey from './journey/Journey';
 import Submit from './submit/Submit';
-import axios from 'axios'
+import { connect } from "react-redux";
+import axios from 'axios';
+import CitySelector from "./city-selector/CitySelector"
 import "./mock/mocker";
 
-function App() {
-  useEffect(() => {
-  	//get请求
-    axios.get('/rest/cities').then(res => {
-        console.log(res.data)
-    })
-  }, [])
+function App(props) {
+  const {from, to} = props;
 
   const onBack=()=> {
     console.log(23423)
@@ -24,14 +21,22 @@ function App() {
         <Header title="火车票" onBack={onBack}></Header>
       </div>
       <form className="form" action="">
-        <Journey></Journey>
+        <Journey from={from} to={to}></Journey>
         <DepartDate></DepartDate>
         <HighSpeed></HighSpeed>
         <Submit></Submit>
       </form>
+      <CitySelector></CitySelector>
     </div>
   )
 }
 
 
-export default App;
+export default connect(
+  function mapStateToProps(state) {
+    return state;
+  },
+  function mapDispatchToProps(dispatch) {
+      return {dispatch};
+  }
+)(App)
