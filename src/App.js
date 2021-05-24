@@ -3,6 +3,7 @@ import DepartDate from './depart-date/DepartDate';
 import Header from './header/Header';
 import HighSpeed from './high-speed/HighSpeed';
 import Journey from './journey/Journey';
+import Submit from './submit/Submit';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Journey></Journey>
         <DepartDate></DepartDate>
         <HighSpeed></HighSpeed>
+        <Submit></Submit>
       </form>
     </div>
   )

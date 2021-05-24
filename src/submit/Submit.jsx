@@ -1,0 +1,15 @@
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import classnames from "classnames";
+import './Submit.css';
+
+export default function HighSpeed(props) {
+    return (
+        <div className="submit">
+            <button type="submit" className="submit-button">
+                {' '}
+                搜索{' '}
+            </button>
+        </div>
+    )
+}
