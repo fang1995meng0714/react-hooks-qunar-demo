@@ -2,9 +2,7 @@ const Mock = require('mockjs')
 const dayjs = require('dayjs');
 
 module.exports = Mock.mock('/rest/cities', 'get', (options) => {
-    const ret = Mock.mock({
-        'user': require('./rest/cities.json')
-    })
+    const ret = Mock.mock(require('./rest/cities.json'))
     return {
         status:200,
         data:ret

@@ -1,7 +1,91 @@
 import React, {useState, useEffect } from 'react';
+import axios from "axios";
+import PropTypes, { func } from "prop-types";
 import "./CitySelector.css";
 
+function CityItem(props) {
+    const {name} = props;
+    return (
+        <li className="city-li">
+            {name || ""}
+        </li>
+    )
+}
+CityItem.propTypes = {
+    name: PropTypes.string.isRequired
+}
+
+
+
+function CitySection(props) {
+    const {title, citys} = props
+    return (
+        <ul className="city-ul">
+            <li className="city-li">{title}</li>
+            {citys.map(item => {
+                return (
+                    <CityItem
+                        key={item.name}
+                        name={item.name}
+                    />
+                )
+            })}
+        </ul>
+    )
+}
+
+CitySection.propTypes = {
+    citys: PropTypes.array,
+    title: PropTypes.string.isRequired
+}
+
+
+function CityList(props) {
+    const {sections} = props;
+    console.log(sections)
+    return (
+        <div className="city-list">
+            <div className="city-cate">
+                {sections.map(section => {
+                    return (
+                        <CitySection 
+                            key={section.title}
+                            citys={section.citys || []}
+                            title={section.title}
+                        />
+                    )
+                })}
+            </div>
+        </div>
+    )
+}
+CityList.propTypes = {
+    sections:PropTypes.array.isRequired,
+}
+
+
 function CitySelector() {
+    const [cityData, setCityData] = useState(null)
+    useEffect(() => {
+        axios.get("/rest/cities")
+            .then((res) => {
+                const cityData = res.data.data;
+                // console.log(cityData)
+                setCityData(cityData)
+            })
+    }, [])
+
+    const outputCitySections = () => {
+        if(cityData) {
+            return (
+                <CityList 
+                    sections={cityData.cityList}
+                />
+            ) 
+        }
+        
+        return <div>error</div>;
+    }
     return (
         <div className="city-selector">
             <div className="city-serch">
@@ -19,6 +103,7 @@ function CitySelector() {
                 <input type="text" className="search-input" placeholder="城市、车站的中文或拼音"/>
                 </div>
             </div>
+            {outputCitySections()}
         </div>
     )
 }
