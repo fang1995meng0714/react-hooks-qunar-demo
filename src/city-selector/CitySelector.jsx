@@ -16,7 +16,7 @@ CityItem.propTypes = {
 }
 
 const CitySection = memo(function CitySection(props) {
-    const {title, citys, setSelectedCity} = props
+    const {title, citys, setSelectedCity} = props;
     return (
         <ul className="city-ul" data-cate={title}>
             <li className="city-li">{title}</li>
@@ -94,18 +94,20 @@ CityList.propTypes = {
 }
 
 const CitySelector = memo(function CitySelector(props) {
-    const {show, back, setSelectedCity} = props;
-    const [cityData, setCityData] = useState(null)
+    const {show, back, setSelectedCity, fetchCityData} = props;
+    const [cityData, setCityData] = useState(null);
+    const [searchKey, setSearchKey] = useState("");
+    
     useEffect(() => {
-        axios.get("/rest/cities")
-            .then((res) => {
-                const cityData = res.data.data;
-                setCityData(cityData)
-            })
+        // axios.get("/rest/cities")
+        //     .then((res) => {
+        //         const cityData = res.data.data;
+        //         setCityData(cityData)
+        //     })
+        // fetchCityData()
     }, [])
 
     const toAlpha = useCallback(alpha => {
-        console.log(alpha)
         document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
     }, []) 
 
@@ -136,7 +138,12 @@ const CitySelector = memo(function CitySelector(props) {
                     </svg>
                 </div>
                 <div className="search-input-wrapper">
-                <input type="text" className="search-input" placeholder="城市、车站的中文或拼音"/>
+                    <input 
+                        type="text" 
+                        className="search-input" 
+                        placeholder="城市、车站的中文或拼音"
+                        onChange={e => setSearchKey(e.target.value)}
+                    />
                 </div>
             </div>
             {outputCitySections()}
@@ -146,7 +153,8 @@ const CitySelector = memo(function CitySelector(props) {
 CitySelector.propTypes = {
     show: PropTypes.bool.isRequired,
     back: PropTypes.func.isRequired,
-    setSelectedCity: PropTypes.func.isRequired
+    setSelectedCity: PropTypes.func.isRequired,
+    fetchCityData: PropTypes.func.isRequired,
 }
 
 export default CitySelector;

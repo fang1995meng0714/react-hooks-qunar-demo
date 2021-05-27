@@ -1,6 +1,8 @@
+import axios from 'axios';
 export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE = "SET_IS_CITY_SELECTOR_VISIBLE";
 export const ACTION_SET_SELECT_CITY = "ACTION_SET_SELECT_CITY";
 export const CHANGEFROMTO = "CHANGEFROMTO";
+export const GET_CITY_DATA = "GET_CITY_DATA";
 
 export const showCitySelectorAction = (value) => {
     return ({
@@ -24,4 +26,18 @@ export const changeFromToAction = () => {
     return ({
         type: CHANGEFROMTO
     })
+}
+
+export const fetchCityDataAction = () => {
+    return (dispatch) => {
+        axios.get("/rest/cities")
+            .then((res) => {
+                const cityData = res.data.data;
+                const action = {
+                    type: GET_CITY_DATA,
+                    value: cityData
+                }
+                dispatch(action)
+            })
+    }
 }

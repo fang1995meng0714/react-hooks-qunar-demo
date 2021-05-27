@@ -1,4 +1,8 @@
-import {ACTION_SET_IS_CITY_SELECTOR_VISIBLE, ACTION_SET_SELECT_CITY, CHANGEFROMTO} from "./actions";
+import {
+    ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
+    ACTION_SET_SELECT_CITY, 
+    CHANGEFROMTO
+} from "./actions";
 
 export default (state, action) => {
     if(action.type === ACTION_SET_IS_CITY_SELECTOR_VISIBLE) {

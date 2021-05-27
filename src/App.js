@@ -8,10 +8,23 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import CitySelector from "./city-selector/CitySelector";
 import "./mock/mocker";
-import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction} from "./store/actions"
+import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction, fetchCityDataAction} from "./store/actions"
+import {store} from "./store/store"
 
 function App(props) {
   const {from, to, isCitySelectorVisible, showCitySelector, setSelectedCity, hideCitySelector, changeFromTo} = props;
+  console.log(props)
+
+  useEffect(() => {
+    // axios.get("/rest/cities")
+    //     .then((res) => {
+    //         const cityData = res.data.data;
+    //         console.log(cityData)
+    //     })
+    const action = fetchCityDataAction;
+    store.dispatch(action); 
+  }, [])
+
   return (
     <div>
       <div className="header-wrapper">
@@ -27,6 +40,7 @@ function App(props) {
         show={isCitySelectorVisible}
         back={hideCitySelector}
         setSelectedCity={setSelectedCity}
+        // fetchCityData={fetchCityData ||{}}
       />
     </div>
   )
@@ -38,7 +52,7 @@ export default connect(
     console.log(state);
     return state;
   },
-  function mapDispatchToProps(dispatch, ownProps) {
+  function mapDispatchToProps(dispatch) {
     return {
       showCitySelector(val) {
         const action = showCitySelectorAction(val);
@@ -55,7 +69,7 @@ export default connect(
       changeFromTo() {
         const action = changeFromToAction();
         dispatch(action);
-      },
+      }
     }
   }
 )(App)
