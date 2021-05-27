@@ -8,17 +8,17 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import CitySelector from "./city-selector/CitySelector";
 import "./mock/mocker";
-import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction} from "./store/actions"
+import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction} from "./store/actions"
 
 function App(props) {
-  const {from, to, isCitySelectorVisible, showCitySelector, setSelectedCity, hideCitySelector} = props;
+  const {from, to, isCitySelectorVisible, showCitySelector, setSelectedCity, hideCitySelector, changeFromTo} = props;
   return (
     <div>
       <div className="header-wrapper">
         <Header title="火车票"></Header>
       </div>
       <form className="form" action="">
-        <Journey from={from} to={to} showCitySelector={showCitySelector}/>
+        <Journey from={from} to={to} showCitySelector={showCitySelector} changeFromTo={changeFromTo}/>
         <DepartDate />
         <HighSpeed />
         <Submit />
@@ -38,7 +38,7 @@ export default connect(
     console.log(state);
     return state;
   },
-  function mapDispatchToProps(dispatch) {
+  function mapDispatchToProps(dispatch, ownProps) {
     return {
       showCitySelector(val) {
         const action = showCitySelectorAction(val);
@@ -51,7 +51,11 @@ export default connect(
       setSelectedCity(val) {
         const action = setSelectedCityAction(val);
         dispatch(action);
-      }
+      },
+      changeFromTo() {
+        const action = changeFromToAction();
+        dispatch(action);
+      },
     }
   }
 )(App)
