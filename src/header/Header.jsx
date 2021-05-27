@@ -6,7 +6,7 @@ export default function Header(props) {
     const {title, onBack} = props
     return (
         <div className="header">
-            <div className="header-back" onClick={onBack}>
+            <div className="header-back">
                <svg width="42" height="42">
                     <polyline
                         points="25,13 16,21 25,29"
@@ -22,6 +22,6 @@ export default function Header(props) {
 }
 
 Header.propTypes = {
-    onBack: PropTypes.func.isRequired,
+    // onBack: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired
 }

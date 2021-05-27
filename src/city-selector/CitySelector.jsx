@@ -51,7 +51,7 @@ const alphabet = Array.from(new Array(26), (ele, index) => {
 
 const CityList = memo(function CityList(props) {
     const {sections} = props;
-    console.log(sections)
+
     return (
         <div className="city-list">
             <div className="city-cate">
@@ -83,13 +83,13 @@ CityList.propTypes = {
 }
 
 const CitySelector = memo(function CitySelector(props) {
-    const {show} = props
+    const {show, back} = props;
+    console.log(props)
     const [cityData, setCityData] = useState(null)
     useEffect(() => {
         axios.get("/rest/cities")
             .then((res) => {
                 const cityData = res.data.data;
-                // console.log(cityData)
                 setCityData(cityData)
             })
     }, [])
@@ -108,7 +108,7 @@ const CitySelector = memo(function CitySelector(props) {
     return (
         <div className={classnames("city-selector" , {hidden: !show})}>
             <div className="city-serch">
-                <div className="search-back">
+                <div className="search-back" onClick={() => back(false)}>
                     <svg width="42" height="42">
                         <polyline 
                             points="25,13 16,21 25,29"
