@@ -37,6 +37,7 @@
     text-align: left;
 }
 .search-input {
+    width: 80%;
     border: 0;
     vertical-align: top;
     font-size: 12px;

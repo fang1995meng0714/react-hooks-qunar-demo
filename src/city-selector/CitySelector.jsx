@@ -1,4 +1,4 @@
-import React, {useState, useEffect, memo } from 'react';
+import React, {useState, useEffect, memo, useCallback } from 'react';
 import axios from "axios";
 import PropTypes from "prop-types";
 import classnames from "classnames";
@@ -18,7 +18,7 @@ CityItem.propTypes = {
 const CitySection = memo(function CitySection(props) {
     const {title, citys, setSelectedCity} = props
     return (
-        <ul className="city-ul">
+        <ul className="city-ul" data-cate={title}>
             <li className="city-li">{title}</li>
             {citys.map(item => {
                 return (
@@ -40,18 +40,24 @@ CitySection.propTypes = {
 }
 
 const AlphaIndex = memo(function AlphaIndex(props) {
-    const {alpha} = props;
+    const {alpha, toAlpha} = props;
     return (
-        <i className="city-index-item">{alpha}</i>
+        <i className="city-index-item" onClick={() => toAlpha(alpha)}>{alpha}</i>
     )
 })
+
+AlphaIndex.propTypes = {
+    alpha: PropTypes.string.isRequired,
+    toAlpha: PropTypes.func.isRequired,
+}
+
 
 const alphabet = Array.from(new Array(26), (ele, index) => {
     return String.fromCharCode(65 + index)
 })
 
 const CityList = memo(function CityList(props) {
-    const {sections, setSelectedCity} = props;
+    const {sections, setSelectedCity, toAlpha} = props;
 
     return (
         <div className="city-list">
@@ -73,6 +79,7 @@ const CityList = memo(function CityList(props) {
                         <AlphaIndex
                             key={alpha}
                             alpha={alpha}
+                            toAlpha={toAlpha}
                         />
                     );
                 })}
@@ -83,6 +90,7 @@ const CityList = memo(function CityList(props) {
 CityList.propTypes = {
     sections:PropTypes.array.isRequired,
     setSelectedCity:PropTypes.func.isRequired,
+    toAlpha: PropTypes.func.isRequired,
 }
 
 const CitySelector = memo(function CitySelector(props) {
@@ -96,12 +104,18 @@ const CitySelector = memo(function CitySelector(props) {
             })
     }, [])
 
+    const toAlpha = useCallback(alpha => {
+        console.log(alpha)
+        document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
+    }, []) 
+
     const outputCitySections = () => {
         if(cityData) {
             return (
                 <CityList 
                     sections={cityData.cityList}
                     setSelectedCity={setSelectedCity}
+                    toAlpha={toAlpha}
                 />
             ) 
         }
