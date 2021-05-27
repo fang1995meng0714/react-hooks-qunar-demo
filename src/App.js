@@ -10,7 +10,7 @@ import CitySelector from "./city-selector/CitySelector"
 import "./mock/mocker";
 
 function App(props) {
-  const {from, to} = props;
+  const {from, to, isCitySelectorVisible} = props;
 
   const onBack=()=> {
     console.log(23423)
@@ -21,12 +21,14 @@ function App(props) {
         <Header title="火车票" onBack={onBack}></Header>
       </div>
       <form className="form" action="">
-        <Journey from={from} to={to}></Journey>
-        <DepartDate></DepartDate>
-        <HighSpeed></HighSpeed>
-        <Submit></Submit>
+        <Journey from={from} to={to} />
+        <DepartDate />
+        <HighSpeed />
+        <Submit />
       </form>
-      <CitySelector></CitySelector>
+      <CitySelector 
+        show={isCitySelectorVisible}
+      />
     </div>
   )
 }

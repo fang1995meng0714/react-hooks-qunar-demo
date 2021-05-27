@@ -1,23 +1,22 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, memo } from 'react';
 import axios from "axios";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 import "./CitySelector.css";
 
-function CityItem(props) {
+const CityItem = memo(function CityItem(props) {
     const {name} = props;
     return (
         <li className="city-li">
             {name || ""}
         </li>
     )
-}
+})
 CityItem.propTypes = {
     name: PropTypes.string.isRequired
 }
 
-
-
-function CitySection(props) {
+const CitySection = memo(function CitySection(props) {
     const {title, citys} = props
     return (
         <ul className="city-ul">
@@ -32,15 +31,25 @@ function CitySection(props) {
             })}
         </ul>
     )
-}
+})
 
 CitySection.propTypes = {
     citys: PropTypes.array,
     title: PropTypes.string.isRequired
 }
 
+const AlphaIndex = memo(function AlphaIndex(props) {
+    const {alpha} = props;
+    return (
+        <i className="city-index-item">{alpha}</i>
+    )
+})
 
-function CityList(props) {
+const alphabet = Array.from(new Array(26), (ele, index) => {
+    return String.fromCharCode(65 + index)
+})
+
+const CityList = memo(function CityList(props) {
     const {sections} = props;
     console.log(sections)
     return (
@@ -56,15 +65,25 @@ function CityList(props) {
                     )
                 })}
             </div>
+            <div className="city-index">
+                {alphabet.map(alpha => {
+                    return (
+                        <AlphaIndex
+                            key={alpha}
+                            alpha={alpha}
+                        />
+                    );
+                })}
+            </div>
         </div>
     )
-}
+})
 CityList.propTypes = {
     sections:PropTypes.array.isRequired,
 }
 
-
-function CitySelector() {
+const CitySelector = memo(function CitySelector(props) {
+    const {show} = props
     const [cityData, setCityData] = useState(null)
     useEffect(() => {
         axios.get("/rest/cities")
@@ -87,7 +106,7 @@ function CitySelector() {
         return <div>error</div>;
     }
     return (
-        <div className="city-selector">
+        <div className={classnames("city-selector" , {hidden: !show})}>
             <div className="city-serch">
                 <div className="search-back">
                     <svg width="42" height="42">
@@ -106,6 +125,6 @@ function CitySelector() {
             {outputCitySections()}
         </div>
     )
-}
+})
 
 export default CitySelector;
