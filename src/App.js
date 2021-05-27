@@ -6,14 +6,12 @@ import Journey from './journey/Journey';
 import Submit from './submit/Submit';
 import { connect } from "react-redux";
 import axios from 'axios';
-import CitySelector from "./city-selector/CitySelector"
+import CitySelector from "./city-selector/CitySelector";
 import "./mock/mocker";
-import {showCitySelectorAction} from "./store/actions"
+import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction} from "./store/actions"
 
 function App(props) {
-  console.log(props)
-  const {from, to, isCitySelectorVisible, showCitySelector} = props;
-
+  const {from, to, isCitySelectorVisible, showCitySelector, setSelectedCity, hideCitySelector} = props;
   return (
     <div>
       <div className="header-wrapper">
@@ -27,7 +25,8 @@ function App(props) {
       </form>
       <CitySelector 
         show={isCitySelectorVisible}
-        back={showCitySelector}
+        back={hideCitySelector}
+        setSelectedCity={setSelectedCity}
       />
     </div>
   )
@@ -36,6 +35,7 @@ function App(props) {
 
 export default connect(
   function mapStateToProps(state) {
+    console.log(state);
     return state;
   },
   function mapDispatchToProps(dispatch) {
@@ -43,6 +43,14 @@ export default connect(
       showCitySelector(val) {
         const action = showCitySelectorAction(val);
         dispatch(action)
+      },
+      hideCitySelector(val) {
+        const action = hideCitySelectorAction();
+        dispatch(action)
+      },
+      setSelectedCity(val) {
+        const action = setSelectedCityAction(val);
+        dispatch(action);
       }
     }
   }

@@ -9,5 +9,6 @@ const enhancer = composeEnhancers(applyMiddleware(thunk));
 export const store = createStore(reducer, {
     from: '北京',
     to: '上海',
-    isCitySelectorVisible: false
+    isCitySelectorVisible: false,
+    currentSelectingLeftCity: false
 }, enhancer);

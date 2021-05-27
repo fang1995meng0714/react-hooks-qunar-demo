@@ -5,19 +5,18 @@ import classnames from "classnames";
 import "./CitySelector.css";
 
 const CityItem = memo(function CityItem(props) {
-    const {name} = props;
+    const {name, setSelectedCity} = props;
     return (
-        <li className="city-li">
-            {name || ""}
-        </li>
+        <li className="city-li" onClick={() => setSelectedCity(name)}>{name || ""}</li>
     )
 })
 CityItem.propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    setSelectedCity: PropTypes.func.isRequired,
 }
 
 const CitySection = memo(function CitySection(props) {
-    const {title, citys} = props
+    const {title, citys, setSelectedCity} = props
     return (
         <ul className="city-ul">
             <li className="city-li">{title}</li>
@@ -26,6 +25,7 @@ const CitySection = memo(function CitySection(props) {
                     <CityItem
                         key={item.name}
                         name={item.name}
+                        setSelectedCity={setSelectedCity}
                     />
                 )
             })}
@@ -35,7 +35,8 @@ const CitySection = memo(function CitySection(props) {
 
 CitySection.propTypes = {
     citys: PropTypes.array,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    setSelectedCity: PropTypes.func.isRequired,
 }
 
 const AlphaIndex = memo(function AlphaIndex(props) {
@@ -50,7 +51,7 @@ const alphabet = Array.from(new Array(26), (ele, index) => {
 })
 
 const CityList = memo(function CityList(props) {
-    const {sections} = props;
+    const {sections, setSelectedCity} = props;
 
     return (
         <div className="city-list">
@@ -61,6 +62,7 @@ const CityList = memo(function CityList(props) {
                             key={section.title}
                             citys={section.citys || []}
                             title={section.title}
+                            setSelectedCity={setSelectedCity}
                         />
                     )
                 })}
@@ -80,11 +82,11 @@ const CityList = memo(function CityList(props) {
 })
 CityList.propTypes = {
     sections:PropTypes.array.isRequired,
+    setSelectedCity:PropTypes.func.isRequired,
 }
 
 const CitySelector = memo(function CitySelector(props) {
-    const {show, back} = props;
-    console.log(props)
+    const {show, back, setSelectedCity} = props;
     const [cityData, setCityData] = useState(null)
     useEffect(() => {
         axios.get("/rest/cities")
@@ -99,6 +101,7 @@ const CitySelector = memo(function CitySelector(props) {
             return (
                 <CityList 
                     sections={cityData.cityList}
+                    setSelectedCity={setSelectedCity}
                 />
             ) 
         }
@@ -108,7 +111,7 @@ const CitySelector = memo(function CitySelector(props) {
     return (
         <div className={classnames("city-selector" , {hidden: !show})}>
             <div className="city-serch">
-                <div className="search-back" onClick={() => back(false)}>
+                <div className="search-back" onClick={() => back()}>
                     <svg width="42" height="42">
                         <polyline 
                             points="25,13 16,21 25,29"
@@ -126,5 +129,10 @@ const CitySelector = memo(function CitySelector(props) {
         </div>
     )
 })
+CitySelector.propTypes = {
+    show: PropTypes.bool.isRequired,
+    back: PropTypes.func.isRequired,
+    setSelectedCity: PropTypes.func.isRequired
+}
 
 export default CitySelector;
