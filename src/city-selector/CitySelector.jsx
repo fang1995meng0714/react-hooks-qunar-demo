@@ -1,9 +1,8 @@
-import React, {useState, useEffect, memo, useCallback } from 'react';
-import axios from "axios";
-import PropTypes from "prop-types";
+import React, {useState, useMemo, memo, useCallback, useEffect } from 'react';
+import PropTypes, { func } from "prop-types";
 import classnames from "classnames";
 import "./CitySelector.css";
-import {store} from "../store/store";
+import axios from 'axios';
 
 const CityItem = memo(function CityItem(props) {
     const {name, setSelectedCity} = props;
@@ -52,6 +51,61 @@ AlphaIndex.propTypes = {
     toAlpha: PropTypes.func.isRequired,
 }
 
+const SuggestItem = memo(function SuggestItem (props) {
+    const {name, onClick} = props;
+    return (
+        <div className="city-suggest-li" onClick={() => onClick(name)}>{name}</div>
+    )
+})
+
+SuggestItem.propTypes = {
+    name: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+}
+
+const Suggest = memo(function Suggest(props) {
+    const {searchKey, setSelectedCity} = props;
+    const [searchResult, setSearchResult] = useState([])
+    useEffect(() => {
+        axios.post("/rest/search", JSON.stringify({searchKey}))
+        .then((res) => {
+            const result = res.data.result;
+            setSearchResult(result)
+        })
+    }, [searchKey])
+
+    const fallBackResult = useMemo(() => {
+        if(!searchResult) {
+            return [
+                {
+                    display: searchKey,
+                }
+            ]
+        }
+        return searchResult;
+    }, [searchResult, searchKey])
+
+    return (
+        <div className="city-suggest">
+            <ul className="city-suggest-ul">
+                {fallBackResult.map(item => {
+                    return (
+                        <SuggestItem
+                            key={item.display}
+                            name={item.display}
+                            onClick={setSelectedCity}
+                        />
+                    );
+                })}
+            </ul>
+        </div>
+    );
+})
+
+Suggest.propTypes = {
+    searchKey: PropTypes.string,
+    setSelectedCity: PropTypes.func.isRequired,
+}
 
 const alphabet = Array.from(new Array(26), (ele, index) => {
     return String.fromCharCode(65 + index)
@@ -97,8 +151,7 @@ CityList.propTypes = {
 const CitySelector = memo(function CitySelector(props) {
     const {show, back, setSelectedCity, cityData} = props;
     const [searchKey, setSearchKey] = useState("");
-    
-     
+    const key = useMemo(() => searchKey.trim(), [searchKey]);
     const toAlpha = useCallback(alpha => {
         document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
     }, []) 
@@ -134,10 +187,22 @@ const CitySelector = memo(function CitySelector(props) {
                         type="text" 
                         className="search-input" 
                         placeholder="城市、车站的中文或拼音"
+                        value={searchKey}
                         onChange={e => setSearchKey(e.target.value)}
                     />
                 </div>
+                <i
+                    onClick={() => setSearchKey('')}
+                    className={classnames('search-clean', {
+                        hidden: key.length===0
+                    })}
+                >
+                    &#xf063;
+                </i>
             </div>
+            {Boolean(key) && 
+                <Suggest searchKey={key} setSelectedCity={setSelectedCity}/>
+            }
             {outputCitySections()}
         </div>
     )
@@ -146,7 +211,7 @@ CitySelector.propTypes = {
     show: PropTypes.bool.isRequired,
     back: PropTypes.func.isRequired,
     setSelectedCity: PropTypes.func.isRequired,
-    fetchCityData: PropTypes.func.isRequired,
+    cityData: PropTypes.object,
 }
 
 export default CitySelector;

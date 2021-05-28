@@ -1,11 +1,10 @@
-import React, {useState, useEffect } from 'react';
+import React, {useEffect } from 'react';
 import DepartDate from './depart-date/DepartDate';
 import Header from './header/Header';
 import HighSpeed from './high-speed/HighSpeed';
 import Journey from './journey/Journey';
 import Submit from './submit/Submit';
 import { connect } from "react-redux";
-import axios from 'axios';
 import CitySelector from "./city-selector/CitySelector";
 import "./mock/mocker";
 import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction, fetchCityDataAction} from "./store/actions"
@@ -43,7 +42,6 @@ function App(props) {
         back={hideCitySelector}
         cityData={cityData}
         setSelectedCity={setSelectedCity}
-        fetchCityData={fetchCityDataAction}
       />
     </div>
   )
