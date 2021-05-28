@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import DepartDate from './depart-date/DepartDate';
 import Header from './header/Header';
 import HighSpeed from './high-speed/HighSpeed';
@@ -7,18 +7,26 @@ import Submit from './submit/Submit';
 import { connect } from "react-redux";
 import CitySelector from "./city-selector/CitySelector";
 import "./mock/mocker";
+import { bindActionCreators } from 'redux';
 import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction, fetchCityDataAction} from "./store/actions"
 import {store} from "./store/store";
 
 function App(props) {
   const {from, to, 
         isCitySelectorVisible, 
-        showCitySelector, 
         setSelectedCity, 
         hideCitySelector, 
-        changeFromTo, 
-        cityData
+        cityData,
+        dispatch
       } = props;
+
+  const cbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        showCitySelector: showCitySelectorAction,
+        changeFromTo:changeFromToAction
+      }, dispatch);
+  }, [])
 
   useEffect(() => {
     const action = fetchCityDataAction();
@@ -32,7 +40,7 @@ function App(props) {
         <Header title="火车票"></Header>
       </div>
       <form className="form" action="">
-        <Journey from={from} to={to} showCitySelector={showCitySelector} changeFromTo={changeFromTo}/>
+        <Journey from={from} to={to} {...cbs}/>
         <DepartDate />
         <HighSpeed />
         <Submit />
@@ -54,10 +62,7 @@ export default connect(
   },
   function mapDispatchToProps(dispatch) {
     return {
-      showCitySelector(val) {
-        const action = showCitySelectorAction(val);
-        dispatch(action)
-      },
+      // showCitySelector changeFromTo  使用bindActionCreators处理
       hideCitySelector(val) {
         const action = hideCitySelectorAction();
         dispatch(action)
@@ -66,10 +71,7 @@ export default connect(
         const action = setSelectedCityAction(val);
         dispatch(action);
       },
-      changeFromTo() {
-        const action = changeFromToAction();
-        dispatch(action);
-      }
+      dispatch
     }
   }
 )(App)

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import './Journey.css';
 
 export default function Journey(props) {
+    console.log(props)
     const {from, to, showCitySelector, changeFromTo} = props
     return(
         <div className="journey">
@@ -32,6 +33,6 @@ export default function Journey(props) {
 Journey.propTypes = {
     from: PropTypes.string.isRequired,
     to: PropTypes.string.isRequired,
-    showCitySelector: PropTypes.func.isRequired,
-    changeFromTo: PropTypes.func.isRequired,
+    showCitySelector: PropTypes.func,
+    changeFromTo: PropTypes.func,
 }

@@ -149,6 +149,7 @@ CityList.propTypes = {
 }
 
 const CitySelector = memo(function CitySelector(props) {
+    console.log(111)
     const {show, back, setSelectedCity, cityData} = props;
     const [searchKey, setSearchKey] = useState("");
     const key = useMemo(() => searchKey.trim(), [searchKey]);
