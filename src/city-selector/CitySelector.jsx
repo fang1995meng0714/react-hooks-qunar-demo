@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import "./CitySelector.css";
+import {store} from "../store/store";
 
 const CityItem = memo(function CityItem(props) {
     const {name, setSelectedCity} = props;
@@ -94,19 +95,10 @@ CityList.propTypes = {
 }
 
 const CitySelector = memo(function CitySelector(props) {
-    const {show, back, setSelectedCity, fetchCityData} = props;
-    const [cityData, setCityData] = useState(null);
+    const {show, back, setSelectedCity, cityData} = props;
     const [searchKey, setSearchKey] = useState("");
     
-    useEffect(() => {
-        // axios.get("/rest/cities")
-        //     .then((res) => {
-        //         const cityData = res.data.data;
-        //         setCityData(cityData)
-        //     })
-        // fetchCityData()
-    }, [])
-
+     
     const toAlpha = useCallback(alpha => {
         document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
     }, []) 

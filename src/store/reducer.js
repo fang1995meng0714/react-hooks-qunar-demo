@@ -1,7 +1,8 @@
 import {
     ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
     ACTION_SET_SELECT_CITY, 
-    CHANGEFROMTO
+    CHANGEFROMTO,
+    GET_CITY_DATA
 } from "./actions";
 
 export default (state, action) => {
@@ -24,6 +25,13 @@ export default (state, action) => {
         const {from, to} = state;
         const obj = {from: to, to: from};
         return Object.assign({}, state, obj)
+    }
+
+    if(action.type === GET_CITY_DATA) {
+        let newState = JSON.parse(JSON.stringify(state));
+        newState.cityData = action.value;
+    
+        return newState;
     }
 
     return state;

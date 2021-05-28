@@ -9,19 +9,21 @@ import axios from 'axios';
 import CitySelector from "./city-selector/CitySelector";
 import "./mock/mocker";
 import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction, fetchCityDataAction} from "./store/actions"
-import {store} from "./store/store"
+import {store} from "./store/store";
 
 function App(props) {
-  const {from, to, isCitySelectorVisible, showCitySelector, setSelectedCity, hideCitySelector, changeFromTo} = props;
-  console.log(props)
+  const {from, to, 
+        isCitySelectorVisible, 
+        showCitySelector, 
+        setSelectedCity, 
+        hideCitySelector, 
+        changeFromTo, 
+        cityData
+      } = props;
 
   useEffect(() => {
-    // axios.get("/rest/cities")
-    //     .then((res) => {
-    //         const cityData = res.data.data;
-    //         console.log(cityData)
-    //     })
-    const action = fetchCityDataAction;
+    const action = fetchCityDataAction();
+      
     store.dispatch(action); 
   }, [])
 
@@ -39,8 +41,9 @@ function App(props) {
       <CitySelector 
         show={isCitySelectorVisible}
         back={hideCitySelector}
+        cityData={cityData}
         setSelectedCity={setSelectedCity}
-        // fetchCityData={fetchCityData ||{}}
+        fetchCityData={fetchCityDataAction}
       />
     </div>
   )
@@ -49,7 +52,6 @@ function App(props) {
 
 export default connect(
   function mapStateToProps(state) {
-    console.log(state);
     return state;
   },
   function mapDispatchToProps(dispatch) {
