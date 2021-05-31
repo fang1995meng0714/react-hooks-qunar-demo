@@ -17,7 +17,8 @@ function App(props) {
         setSelectedCity, 
         hideCitySelector, 
         cityData,
-        dispatch
+        dispatch,
+        departDate
       } = props;
 
   const cbs = useMemo(() => {
@@ -41,7 +42,7 @@ function App(props) {
       </div>
       <form className="form" action="">
         <Journey from={from} to={to} {...cbs}/>
-        <DepartDate />
+        <DepartDate time={departDate}/>
         <HighSpeed />
         <Submit />
       </form>

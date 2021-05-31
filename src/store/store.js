@@ -11,5 +11,6 @@ export const store = createStore(reducer, {
     to: '上海',
     isCitySelectorVisible: false,
     currentSelectingLeftCity: false,
-    cityData: null
+    cityData: null,
+    departDate: +new Date()
 }, enhancer);
