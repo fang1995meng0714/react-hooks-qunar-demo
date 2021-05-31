@@ -10,6 +10,7 @@ import "./mock/mocker";
 import { bindActionCreators } from 'redux';
 import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction, fetchCityDataAction} from "./store/actions"
 import {store} from "./store/store";
+import DateSelector from './date-selector/DateSelector';
 
 function App(props) {
   const {from, to, 
@@ -52,6 +53,7 @@ function App(props) {
         cityData={cityData}
         setSelectedCity={setSelectedCity}
       />
+      <DateSelector />
     </div>
   )
 }
