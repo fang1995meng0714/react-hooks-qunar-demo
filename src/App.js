@@ -19,7 +19,8 @@ function App(props) {
         hideCitySelector, 
         cityData,
         dispatch,
-        departDate
+        departDate,
+        isDateSelectorVisible
       } = props;
 
   const cbs = useMemo(() => {
@@ -53,7 +54,9 @@ function App(props) {
         cityData={cityData}
         setSelectedCity={setSelectedCity}
       />
-      <DateSelector />
+      <DateSelector 
+        show={isDateSelectorVisible}  
+      />
     </div>
   )
 }

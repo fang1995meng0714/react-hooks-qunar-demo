@@ -3,6 +3,7 @@ export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE = "SET_IS_CITY_SELECTOR_VISIBLE
 export const ACTION_SET_SELECT_CITY = "ACTION_SET_SELECT_CITY";
 export const CHANGEFROMTO = "CHANGEFROMTO";
 export const GET_CITY_DATA = "GET_CITY_DATA";
+export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE = "ACTION_SET_IS_DATE_SELECTOR_VISIBLE"
 
 export const showCitySelectorAction = (value) => {
     return ({
@@ -40,4 +41,18 @@ export const fetchCityDataAction = () => {
                 dispatch(action)
             })
     }
+}
+
+export const showDateSelector = () => {
+    return ({
+        type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
+        value: true
+    })
+}
+
+export const hideDateSelector = () => {
+    return ({
+        type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
+        value: false
+    })
 }

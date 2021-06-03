@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { h0 } from '../common/fp';
 import dayjs from 'dayjs';
@@ -22,3 +22,8 @@ export default function DepartDate(props) {
         </div>
     )
 }
+
+DepartDate.propTypes = {
+    time: PropTypes.number.isRequired,
+    // onClick: PropTypes.func.isRequired,
+};
