@@ -150,16 +150,16 @@ module.exports = function(webpackEnv) {
             isEnvDevelopment &&
                 require.resolve('react-dev-utils/webpackHotDevClient'),
         ].filter(Boolean),
-        ticket: [
-            paths.appTicketJs,
-            isEnvDevelopment &&
-                require.resolve('react-dev-utils/webpackHotDevClient'),
-        ].filter(Boolean),
-        order: [
-            paths.appOrderJs,
-            isEnvDevelopment &&
-                require.resolve('react-dev-utils/webpackHotDevClient'),
-        ].filter(Boolean),
+        // ticket: [
+        //     paths.appTicketJs,
+        //     isEnvDevelopment &&
+        //         require.resolve('react-dev-utils/webpackHotDevClient'),
+        // ].filter(Boolean),
+        // order: [
+        //     paths.appOrderJs,
+        //     isEnvDevelopment &&
+        //         require.resolve('react-dev-utils/webpackHotDevClient'),
+        // ].filter(Boolean),
     },
     output: {
       // The build folder.
@@ -170,7 +170,7 @@ module.exports = function(webpackEnv) {
       // In development, it does not produce real files.
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+        : isEnvDevelopment && 'static/js/[name].js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
@@ -520,6 +520,33 @@ module.exports = function(webpackEnv) {
             template: paths.appHtml,
             filename: 'index.html',
             chunks: ['index'],
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appHtml,
+            filename: 'query.html',
+            chunks: ['query'],
           },
           isEnvProduction
             ? {
