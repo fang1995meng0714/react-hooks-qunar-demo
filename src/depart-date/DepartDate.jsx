@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import './DepartDate.css';
 
 export default function DepartDate(props) {
-    const {time} = props;
+    const {time, showCitySelector} = props;
 
     const h0OfDepart = h0(time);
     const departDate = new Date(h0OfDepart);
@@ -16,7 +16,7 @@ export default function DepartDate(props) {
         ['日', '一', '二', '三', '四', '五', '六'][departDate.getDay()] +
         (isToday ? '(今天)' : '');
     return (
-        <div className="depart-date">
+        <div className="depart-date" onClick={showCitySelector}>
             <input type="hidden" name="date" value={departDateString}/>
             {departDateString}<span className="depart-week">{weekString}</span>
         </div>
@@ -25,5 +25,5 @@ export default function DepartDate(props) {
 
 DepartDate.propTypes = {
     time: PropTypes.number.isRequired,
-    // onClick: PropTypes.func.isRequired,
+    showCitySelector: PropTypes.func.isRequired,
 };

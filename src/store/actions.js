@@ -3,7 +3,8 @@ export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE = "SET_IS_CITY_SELECTOR_VISIBLE
 export const ACTION_SET_SELECT_CITY = "ACTION_SET_SELECT_CITY";
 export const CHANGEFROMTO = "CHANGEFROMTO";
 export const GET_CITY_DATA = "GET_CITY_DATA";
-export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE = "ACTION_SET_IS_DATE_SELECTOR_VISIBLE"
+export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE = "ACTION_SET_IS_DATE_SELECTOR_VISIBLE";
+export const ACTION_SET_DEPART_DATE = "ACTION_SET_DEPART_DATE";
 
 export const showCitySelectorAction = (value) => {
     return ({
@@ -43,16 +44,23 @@ export const fetchCityDataAction = () => {
     }
 }
 
-export const showDateSelector = () => {
+export const showDateSelectorAction = () => {
     return ({
         type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
         value: true
     })
 }
 
-export const hideDateSelector = () => {
+export const hideDateSelectorAction = () => {
     return ({
         type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
         value: false
+    })
+}
+
+export const setDepartDateAction = (day) => {
+    return ({
+        type: ACTION_SET_DEPART_DATE,
+        value: day
     })
 }

@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import {h0} from "./../common/fp";
 
 function Day(props) {
-    const {day} = props;
+    const {day, setDepartDate} = props;
 
     if(!day) {
         return <td className="null"></td>
@@ -25,20 +25,25 @@ function Day(props) {
     const dateString = now === day ? "今天" : new Date(day).getDate();
 
     return (
-        <td className={classnames(classes)}>
+        <td className={classnames(classes)} onClick={() => setDepartDate(day)}>
             {dateString}
         </td>
     )
 }
 
+Day.propTypes = {
+    day: PropTypes.number,
+    setDepartDate: PropTypes.func.isRequired,
+}
+
 function Week(props) {
-    const {days} = props;
+    const {days, setDepartDate} = props;
 
     return (
         <tr className="date-table-days">
             {
                 days.map((day, index) => {
-                    return <Day key={index} day={day}/>
+                    return <Day key={index} day={day} setDepartDate={setDepartDate}/>
                 })
             }
         </tr>
@@ -47,10 +52,11 @@ function Week(props) {
 
 Week.propTypes = {
     days: PropTypes.array.isRequired,
+    setDepartDate: PropTypes.func.isRequired,
 }
 
 function Month(props) {
-    const {startingTimeInMonth} = props;
+    const {startingTimeInMonth, setDepartDate} = props;
 
     const startDay = new Date(startingTimeInMonth);
     const currentDay = new Date(startingTimeInMonth);
@@ -103,6 +109,7 @@ function Month(props) {
                         return <Week 
                             key={index}
                             days={week}
+                            setDepartDate={setDepartDate}
                         />
                     })
                 }
@@ -113,10 +120,11 @@ function Month(props) {
 
 Month.propTypes = {
     startingTimeInMonth: PropTypes.number.isRequired,
+    setDepartDate: PropTypes.func.isRequired, 
 }
 
 export default function DateSelector(props) {
-    const {show} = props;
+    const {show, onBack, setDepartDate} = props;
     const now = new Date();
     now.setHours(0);
     now.setMinutes(0);
@@ -134,7 +142,7 @@ export default function DateSelector(props) {
 
     return (
         <div className={classnames('date-selector', { hidden: !show })}>
-            <Header title="日期选择" />
+            <Header title="日期选择" onBack={onBack}/>
             <div className="date-selector-tables">
                 {
                     monthSequence.map(month => {
@@ -142,6 +150,7 @@ export default function DateSelector(props) {
                             <Month 
                                 key={month}
                                 startingTimeInMonth={month}
+                                setDepartDate={setDepartDate}
                             />
                         )
                     })
@@ -154,5 +163,6 @@ export default function DateSelector(props) {
 
 DateSelector.propTypes = {
     show: PropTypes.bool.isRequired,
-    // onClick: PropTypes.func.isRequired,
+    onBack: PropTypes.func.isRequired,
+    setDepartDate: PropTypes.func.isRequired,
 };

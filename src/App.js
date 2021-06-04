@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import DepartDate from './depart-date/DepartDate';
 import Header from './header/Header';
 import HighSpeed from './high-speed/HighSpeed';
@@ -8,7 +8,15 @@ import { connect } from "react-redux";
 import CitySelector from "./city-selector/CitySelector";
 import "./mock/mocker";
 import { bindActionCreators } from 'redux';
-import {showCitySelectorAction, hideCitySelectorAction, setSelectedCityAction, changeFromToAction, fetchCityDataAction} from "./store/actions"
+import {showCitySelectorAction, 
+        hideCitySelectorAction, 
+        setSelectedCityAction, 
+        changeFromToAction, 
+        fetchCityDataAction,
+        showDateSelectorAction,
+        hideDateSelectorAction,
+        setDepartDateAction
+      } from "./store/actions"
 import {store} from "./store/store";
 import DateSelector from './date-selector/DateSelector';
 
@@ -20,7 +28,10 @@ function App(props) {
         cityData,
         dispatch,
         departDate,
-        isDateSelectorVisible
+        isDateSelectorVisible,
+        showDateSelector,
+        hideDateSelector,
+        setDepartDate
       } = props;
 
   const cbs = useMemo(() => {
@@ -37,14 +48,18 @@ function App(props) {
     store.dispatch(action); 
   }, [])
 
+  const onBack = useCallback(() => {
+    window.history.back();
+  }, []);
+
   return (
     <div>
       <div className="header-wrapper">
-        <Header title="火车票"></Header>
+        <Header title="火车票" onBack={onBack}></Header>
       </div>
       <form className="form" action="">
         <Journey from={from} to={to} {...cbs}/>
-        <DepartDate time={departDate}/>
+        <DepartDate time={departDate} showCitySelector={showDateSelector}/>
         <HighSpeed />
         <Submit />
       </form>
@@ -55,7 +70,9 @@ function App(props) {
         setSelectedCity={setSelectedCity}
       />
       <DateSelector 
-        show={isDateSelectorVisible}  
+        show={isDateSelectorVisible}
+        onBack={hideDateSelector}
+        setDepartDate={setDepartDate}
       />
     </div>
   )
@@ -77,7 +94,19 @@ export default connect(
         const action = setSelectedCityAction(val);
         dispatch(action);
       },
-      dispatch
+      dispatch,
+      showDateSelector(val) {
+        const action = showDateSelectorAction(val);
+        dispatch(action);
+      },
+      hideDateSelector(val) {
+        const action = hideDateSelectorAction(val);
+        dispatch(action);
+      },
+      setDepartDate(val) {
+        const action = setDepartDateAction(val);
+        dispatch(action);
+      }
     }
   }
 )(App)
