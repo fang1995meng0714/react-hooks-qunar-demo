@@ -3,7 +3,7 @@ import './DateSelector.css';
 import Header from './../header/Header';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import {h0} from "./../common/fp";
+import {h0} from "../../common/fp";
 
 function Day(props) {
     const {day, setDepartDate} = props;

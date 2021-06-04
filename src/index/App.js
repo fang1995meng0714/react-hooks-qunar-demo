@@ -1,64 +1,64 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
-// import DepartDate from './depart-date/DepartDate';
-// import Header from '../compoonents/header/Header';
-// import HighSpeed from './components/high-speed/HighSpeed';
-// import Journey from './components/journey/Journey';
-// import Submit from './components/submit/Submit';
-// import { connect } from "react-redux";
-// import CitySelector from "../compoonents/city-selector/CitySelector";
-// import "../mock/mocker";
-// import { bindActionCreators } from 'redux';
-// import {showCitySelectorAction, 
-//         hideCitySelectorAction, 
-//         setSelectedCityAction, 
-//         changeFromToAction, 
-//         fetchCityDataAction,
-//         showDateSelectorAction,
-//         hideDateSelectorAction,
-//         setDepartDateAction,
-//         setHighSpeedAction
-//       } from "./store/actions"
-// import {store} from "./store/store";
-// import DateSelector from './date-selector/DateSelector';
+import { connect } from "react-redux";
+import DepartDate from './components/depart-date/DepartDate.jsx';
+import Header from '../compoonents/header/Header';
+import HighSpeed from './components/high-speed/HighSpeed';
+import Journey from './components/journey/Journey';
+import Submit from './components/submit/Submit';
+import CitySelector from "../compoonents/city-selector/CitySelector";
+import DateSelector from '../compoonents/date-selector/DateSelector';
+
+import "../mock/mocker";
+import { bindActionCreators } from 'redux';
+import {showCitySelectorAction, 
+        hideCitySelectorAction, 
+        setSelectedCityAction, 
+        changeFromToAction, 
+        fetchCityDataAction,
+        showDateSelectorAction,
+        hideDateSelectorAction,
+        setDepartDateAction,
+        setHighSpeedAction
+      } from "./store/actions"
+import {store} from "./store/store";
 
 function App(props) {
-  // const {from, to, 
-  //       isCitySelectorVisible, 
-  //       setSelectedCity, 
-  //       hideCitySelector, 
-  //       cityData,
-  //       dispatch,
-  //       departDate,
-  //       isDateSelectorVisible,
-  //       showDateSelector,
-  //       hideDateSelector,
-  //       setDepartDate,
-  //       highSpeed,
-  //       setHighSpeed
-  //     } = props;
+  const {from, to, 
+        isCitySelectorVisible, 
+        setSelectedCity, 
+        hideCitySelector, 
+        cityData,
+        dispatch,
+        departDate,
+        isDateSelectorVisible,
+        showDateSelector,
+        hideDateSelector,
+        setDepartDate,
+        highSpeed,
+        setHighSpeed
+      } = props;
 
-  // const cbs = useMemo(() => {
-  //   return bindActionCreators(
-  //     {
-  //       showCitySelector: showCitySelectorAction,
-  //       changeFromTo:changeFromToAction
-  //     }, dispatch);
-  // }, [])
+  const cbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        showCitySelector: showCitySelectorAction,
+        changeFromTo:changeFromToAction
+      }, dispatch);
+  }, [])
 
-  // useEffect(() => {
-  //   const action = fetchCityDataAction();
+  useEffect(() => {
+    const action = fetchCityDataAction();
       
-  //   store.dispatch(action); 
-  // }, [])
+    store.dispatch(action); 
+  }, [])
 
-  // const onBack = useCallback(() => {
-  //   window.history.back();
-  // }, []);
+  const onBack = useCallback(() => {
+    window.history.back();
+  }, []);
 
   return (
     <div>
-      水电费水电费鼎折覆餗
-      {/* <div className="header-wrapper">
+      <div className="header-wrapper">
         <Header title="火车票" onBack={onBack}></Header>
       </div>
       <form className="form" action="">
@@ -77,44 +77,43 @@ function App(props) {
         show={isDateSelectorVisible}
         onBack={hideDateSelector}
         setDepartDate={setDepartDate}
-      /> */}
+      />
     </div>
   )
 }
 
-export default App;
-// export default connect(
-//   function mapStateToProps(state) {
-//     return state;
-//   },
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//       // showCitySelector changeFromTo  使用bindActionCreators处理
-//       hideCitySelector(val) {
-//         const action = hideCitySelectorAction();
-//         dispatch(action)
-//       },
-//       setSelectedCity(val) {
-//         const action = setSelectedCityAction(val);
-//         dispatch(action);
-//       },
-//       dispatch,
-//       showDateSelector(val) {
-//         const action = showDateSelectorAction(val);
-//         dispatch(action);
-//       },
-//       hideDateSelector(val) {
-//         const action = hideDateSelectorAction(val);
-//         dispatch(action);
-//       },
-//       setDepartDate(val) {
-//         const action = setDepartDateAction(val);
-//         dispatch(action);
-//       },
-//       setHighSpeed(val) {
-//         const action = setHighSpeedAction(val);
-//         dispatch(action);
-//       }
-//     }
-//   }
-// )(App)
+export default connect(
+  function mapStateToProps(state) {
+    return state;
+  },
+  function mapDispatchToProps(dispatch) {
+    return {
+      // showCitySelector changeFromTo  使用bindActionCreators处理
+      hideCitySelector(val) {
+        const action = hideCitySelectorAction();
+        dispatch(action)
+      },
+      setSelectedCity(val) {
+        const action = setSelectedCityAction(val);
+        dispatch(action);
+      },
+      dispatch,
+      showDateSelector(val) {
+        const action = showDateSelectorAction(val);
+        dispatch(action);
+      },
+      hideDateSelector(val) {
+        const action = hideDateSelectorAction(val);
+        dispatch(action);
+      },
+      setDepartDate(val) {
+        const action = setDepartDateAction(val);
+        dispatch(action);
+      },
+      setHighSpeed(val) {
+        const action = setHighSpeedAction(val);
+        dispatch(action);
+      }
+    }
+  }
+)(App)

@@ -1,5 +1,5 @@
 import React from 'react';
-import switchImg from '../imgs/switch.svg';
+import switchImg from '../../imgs/switch.svg';
 import PropTypes from 'prop-types';
 import './Journey.css';
 
