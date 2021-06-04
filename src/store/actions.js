@@ -5,6 +5,7 @@ export const CHANGEFROMTO = "CHANGEFROMTO";
 export const GET_CITY_DATA = "GET_CITY_DATA";
 export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE = "ACTION_SET_IS_DATE_SELECTOR_VISIBLE";
 export const ACTION_SET_DEPART_DATE = "ACTION_SET_DEPART_DATE";
+export const SET_HIGH_SPEED = 'SET_HIGH_SPEED';
 
 export const showCitySelectorAction = (value) => {
     return ({
@@ -62,5 +63,11 @@ export const setDepartDateAction = (day) => {
     return ({
         type: ACTION_SET_DEPART_DATE,
         value: day
+    })
+}
+
+export const setHighSpeedAction = () => {
+    return ({
+        type: SET_HIGH_SPEED
     })
 }

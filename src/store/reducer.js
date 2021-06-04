@@ -4,7 +4,8 @@ import {
     CHANGEFROMTO,
     GET_CITY_DATA,
     ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
-    ACTION_SET_DEPART_DATE
+    ACTION_SET_DEPART_DATE,
+    SET_HIGH_SPEED
 } from "./actions";
 
 export default (state, action) => {
@@ -47,6 +48,14 @@ export default (state, action) => {
         let newState = JSON.parse(JSON.stringify(state));
         newState.departDate = action.value;
         newState.isDateSelectorVisible = false;
+    
+        return newState; 
+    }
+
+    if(action.type === SET_HIGH_SPEED) {
+        let newState = JSON.parse(JSON.stringify(state));
+        let temp = state.highSpeed;
+        newState.highSpeed = !temp;
     
         return newState; 
     }

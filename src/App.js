@@ -15,7 +15,8 @@ import {showCitySelectorAction,
         fetchCityDataAction,
         showDateSelectorAction,
         hideDateSelectorAction,
-        setDepartDateAction
+        setDepartDateAction,
+        setHighSpeedAction
       } from "./store/actions"
 import {store} from "./store/store";
 import DateSelector from './date-selector/DateSelector';
@@ -31,7 +32,9 @@ function App(props) {
         isDateSelectorVisible,
         showDateSelector,
         hideDateSelector,
-        setDepartDate
+        setDepartDate,
+        highSpeed,
+        setHighSpeed
       } = props;
 
   const cbs = useMemo(() => {
@@ -60,7 +63,7 @@ function App(props) {
       <form className="form" action="">
         <Journey from={from} to={to} {...cbs}/>
         <DepartDate time={departDate} showCitySelector={showDateSelector}/>
-        <HighSpeed />
+        <HighSpeed highSpeed={highSpeed} toggle={setHighSpeed}/>
         <Submit />
       </form>
       <CitySelector 
@@ -105,6 +108,10 @@ export default connect(
       },
       setDepartDate(val) {
         const action = setDepartDateAction(val);
+        dispatch(action);
+      },
+      setHighSpeed(val) {
+        const action = setHighSpeedAction(val);
         dispatch(action);
       }
     }

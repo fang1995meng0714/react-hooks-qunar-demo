@@ -1,6 +1,4 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import classnames from "classnames";
 import './Submit.css';
 
 export default function HighSpeed(props) {

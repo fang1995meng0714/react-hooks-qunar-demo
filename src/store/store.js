@@ -13,5 +13,6 @@ export const store = createStore(reducer, {
     currentSelectingLeftCity: false,
     cityData: null,
     departDate: +new Date(),
-    isDateSelectorVisible: false
+    isDateSelectorVisible: false,
+    highSpeed: false,
 }, enhancer);
