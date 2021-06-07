@@ -69,6 +69,7 @@ const Suggest = memo(function Suggest(props) {
     useEffect(() => {
         axios.post("/rest/search", JSON.stringify({searchKey}))
         .then((res) => {
+            console.log(res)
             const result = res.data.result;
             setSearchResult(result)
         })

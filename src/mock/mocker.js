@@ -24,12 +24,17 @@ module.exports = Mock.mock('/rest/search', 'post', (options) => {
     }
 })
 
-module.exports = Mock.mock('/rest/query', 'GET', (options) => {
-    const response = require('./rest/query.json');
+module.exports = Mock.mock('/rest/query', 'get', (options) => {
+    // const response = require('./rest/query.json');
+    const response = Mock.mock(require('./rest/query.json'))
+    console.log(options)
+    // response.dataMap.directTrainInfo.trains = response.dataMap.directTrainInfo.trains.reverse();
 
-    response.dataMap.directTrainInfo.trains = response.dataMap.directTrainInfo.trains.reverse();
-
-    return options.json(response);
+    // return options.json(response);
+    return {
+        status:200,
+        data:response
+    } 
 })
 
 module.exports = Mock.mock('/rest/ticket', 'GET', (options) => {
