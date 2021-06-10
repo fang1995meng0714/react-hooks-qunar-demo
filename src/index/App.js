@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
 import { connect } from "react-redux";
 import DepartDate from './components/depart-date/DepartDate.jsx';
-import Header from '../compoonents/header/Header';
+import Header from '../components/header/Header';
 import HighSpeed from './components/high-speed/HighSpeed';
 import Journey from './components/journey/Journey';
 import Submit from './components/submit/Submit';
-import CitySelector from "../compoonents/city-selector/CitySelector";
-import DateSelector from '../compoonents/date-selector/DateSelector';
+import CitySelector from "../components/city-selector/CitySelector";
+import DateSelector from '../components/date-selector/DateSelector';
 
 import "../mock/mocker";
 import { bindActionCreators } from 'redux';

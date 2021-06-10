@@ -1,17 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Header from '../compoonents/header/Header';
-import Nav from '../compoonents/nav/Nav';
+import Header from '../components/header/Header';
+import Nav from '../components/nav/Nav';
 import axios from 'axios';
 import "../mock/mocker";
-import List from './compoonents/list/List';
-import Bottom from './compoonents/bottom/Bottom';
+import List from './components/list/List';
+import Bottom from './components/bottom/Bottom';
 import { connect } from 'react-redux';
-import {setFrom, setTo} from "./store/actions";
+import {
+    setFrom, 
+    setTo,
+    setDepartDate
+} from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
+import { h0 } from '../common/fp';
+import dayjs from 'dayjs';
 
 function App(props) {
-    const {from, to,dispatch} = props;
+    const {from, to,dispatch, departDate} = props;
     const [trainList, setTrainList] = useState([]);
     const onBack = useCallback(() => {
         window.history.back();
@@ -28,9 +34,10 @@ function App(props) {
 
     useEffect(() => {
         const queries = URI.parseQuery(window.location.search);
-        const {from, to} = queries;
-        dispatch(setFrom(from))
-        dispatch(setTo(to))
+        const {from, to, date, highSpeed} = queries;
+        dispatch(setFrom(from));
+        dispatch(setTo(to));
+        dispatch(setDepartDate(h0(dayjs(date).valueOf())))
     }, [])
 
     return (
@@ -38,7 +45,9 @@ function App(props) {
             <div className="header-wrapper">
                 <Header title={`${from} ⇀ ${to}`} onBack={onBack}/>
             </div>
-            <Nav />
+            <Nav 
+                date={departDate}
+            />
             <List list={trainList}/>
             <Bottom />
         </div>
