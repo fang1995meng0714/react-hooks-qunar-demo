@@ -10,7 +10,7 @@ export default function HighSpeed(props) {
         <div className="high-speed">
             <div className="hith-speed-label">只看高铁/动车</div>
             <div className="high-speed-switch"  onClick={() => toggle()}>
-                <input type="hidden" name="highSpeed" />
+                <input type="hidden" name="highSpeed"  value={highSpeed}/>
                 <div className={classnames("high-speed-track", {
                     checked: highSpeed
                 })}>
