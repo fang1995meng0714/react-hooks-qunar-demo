@@ -56,7 +56,6 @@ ListItem.propTypes = {
 
 function List(props) {
     const {list} = props;
-    console.log(list)
     return (
         <ul className="list">
             {

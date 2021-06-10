@@ -5,8 +5,13 @@ import axios from 'axios';
 import "../mock/mocker";
 import List from './compoonents/list/List';
 import Bottom from './compoonents/bottom/Bottom';
+import { connect } from 'react-redux';
+import {cityNameAction} from "./store/actions";
+import URI from 'urijs';
+import { bindActionCreators } from 'redux';
 
 function App(props) {
+    const {from, to, cityName,dispatch} = props;
     const [trainList, setTrainList] = useState([]);
     const onBack = useCallback(() => {
         window.history.back();
@@ -20,6 +25,13 @@ function App(props) {
             setTrainList(trains)
         })
     }, [])
+
+    useEffect(() => {
+        const queries = URI.parseQuery(window.location.search);
+        const {from} = queries;
+        dispatch(cityNameAction(from))
+    }, [])
+
     return (
         <div>
             <div className="header-wrapper">
@@ -32,4 +44,18 @@ function App(props) {
     )
 }
 
-export default App;
+export default connect(
+    function mapStateToProps(state) {
+        console.log(state)
+        return state;
+    },
+    function mapDispatchToProps(dispatch) {
+        return {
+            dispatch,
+            // cityName(val) {
+            //     const action = cityNameAction(val);
+            //     dispatch(action);
+            // }
+        };
+    }
+)(App);
