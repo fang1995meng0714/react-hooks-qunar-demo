@@ -15,6 +15,7 @@ import URI from 'urijs';
 import { bindActionCreators } from 'redux';
 import { h0 } from '../common/fp';
 import dayjs from 'dayjs';
+import useNav from "../costom-hooks/useNav";
 
 function App(props) {
     const {from, to,dispatch, departDate} = props;
@@ -32,6 +33,10 @@ function App(props) {
         })
     }, [])
 
+    const {isPrevDisabled, isNextDisabled} = useNav(
+        departDate
+    )
+
     useEffect(() => {
         const queries = URI.parseQuery(window.location.search);
         const {from, to, date, highSpeed} = queries;
@@ -47,6 +52,8 @@ function App(props) {
             </div>
             <Nav 
                 date={departDate}
+                isPrevDisabled={isPrevDisabled}
+                isNextDisabled={isNextDisabled}
             />
             <List list={trainList}/>
             <Bottom />
