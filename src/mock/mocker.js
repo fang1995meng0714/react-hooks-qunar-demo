@@ -24,8 +24,14 @@ module.exports = Mock.mock('/rest/search', 'post', (options) => {
     }
 })
 
-module.exports = Mock.mock('/rest/query', 'get', (options) => {
-    const response = Mock.mock(require('./rest/query.json'))
+let o = 1;
+module.exports = Mock.mock('/rest/query', 'post', (options) => {
+    let response = Mock.mock(require('./rest/query.json'));
+    o++;
+    if(o % 2=== 0) {
+        response.dataMap.directTrainInfo.trains = response.dataMap.directTrainInfo.trains.reverse();
+    }
+    
     return {
         status:200,
         data:response

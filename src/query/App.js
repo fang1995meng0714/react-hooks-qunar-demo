@@ -9,29 +9,23 @@ import { connect } from 'react-redux';
 import {
     setFrom, 
     setTo,
-    setDepartDate
+    setDepartDate,
+    toggleOrderType,
+    setTrainList,
+    setHighSpeed
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
 import { h0 } from '../common/fp';
 import dayjs from 'dayjs';
 import useNav from "../costom-hooks/useNav";
+import { useMemo } from 'react';
 
 function App(props) {
-    const {from, to,dispatch, departDate} = props;
-    const [trainList, setTrainList] = useState([]);
+    const {trainList, from, to,dispatch, departDate, orderType, highSpeed} = props;
     const onBack = useCallback(() => {
         window.history.back();
     }, []);
-
-    useEffect(() => {
-        axios.get("/rest/query")
-        .then((res) => {
-            let response = res.data.data.dataMap;
-            let trains = response.directTrainInfo.trains;
-            setTrainList(trains)
-        })
-    }, [])
 
     const {isPrevDisabled, isNextDisabled} = useNav(
         departDate
@@ -42,7 +36,49 @@ function App(props) {
         const {from, to, date, highSpeed} = queries;
         dispatch(setFrom(from));
         dispatch(setTo(to));
+        dispatch(setHighSpeed(highSpeed === 'true'));
         dispatch(setDepartDate(h0(dayjs(date).valueOf())))
+    }, [])
+
+    useEffect(() => {
+        console.log(222)
+        const queryJson = {
+            from: from,
+            to: to,
+            date: dayjs(departDate).format('YYYY-MM-DD'),
+            highSpeed: highSpeed,
+            orderType: orderType
+        }
+        axios.post("/rest/query", JSON.stringify({queryJson}))
+            .then((res) => {
+                let result = res.data.data;
+                const {
+                    dataMap: {
+                        directTrainInfo: {
+                            trains,
+                            filter: {
+                                ticketType,
+                                trainType,
+                                depStation,
+                                arrStation,
+                            },
+                        },
+                    },
+                } = result;
+                dispatch(setTrainList(trains));
+            })
+    }, [
+        from, 
+        to,
+        departDate,
+        highSpeed,
+        orderType
+    ])
+
+    const bottomCbs = useMemo(() => {
+        return bindActionCreators({
+            toggleOrderType
+        },dispatch)
     }, [])
 
     return (
@@ -56,14 +92,16 @@ function App(props) {
                 isNextDisabled={isNextDisabled}
             />
             <List list={trainList}/>
-            <Bottom />
+            <Bottom 
+                orderType={orderType}
+                {...bottomCbs}
+            />
         </div>
     )
 }
 
 export default connect(
     function mapStateToProps(state) {
-        console.log(state)
         return state;
     },
     function mapDispatchToProps(dispatch) {
