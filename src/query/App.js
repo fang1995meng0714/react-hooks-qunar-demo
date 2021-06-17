@@ -12,7 +12,8 @@ import {
     setDepartDate,
     toggleOrderType,
     setTrainList,
-    setHighSpeed
+    setHighSpeed,
+    toggleHighSpeed
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -41,7 +42,6 @@ function App(props) {
     }, [])
 
     useEffect(() => {
-        console.log(222)
         const queryJson = {
             from: from,
             to: to,
@@ -49,6 +49,7 @@ function App(props) {
             highSpeed: highSpeed,
             orderType: orderType
         }
+        console.log(queryJson)
         axios.post("/rest/query", JSON.stringify({queryJson}))
             .then((res) => {
                 let result = res.data.data;
@@ -77,7 +78,8 @@ function App(props) {
 
     const bottomCbs = useMemo(() => {
         return bindActionCreators({
-            toggleOrderType
+            toggleOrderType,
+            toggleHighSpeed
         },dispatch)
     }, [])
 
@@ -94,6 +96,7 @@ function App(props) {
             <List list={trainList}/>
             <Bottom 
                 orderType={orderType}
+                highSpeed={highSpeed}
                 {...bottomCbs}
             />
         </div>

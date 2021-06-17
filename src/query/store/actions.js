@@ -56,3 +56,11 @@ export function setHighSpeed(highSpeed) {
         value: highSpeed
     }
 }
+
+export function toggleHighSpeed() {
+    return (dispatch, getState) => {
+        const {highSpeed} = getState();
+
+        dispatch(setHighSpeed(!highSpeed));
+    }
+}
