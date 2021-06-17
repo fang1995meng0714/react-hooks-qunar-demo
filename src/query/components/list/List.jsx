@@ -10,7 +10,8 @@ function ListItem(props) {
         aStation,
         trainNumber,
         time,
-        priceMsg
+        priceMsg,
+        dayAfter
     } = props;
     return (
         <div className="list-item">
@@ -18,7 +19,7 @@ function ListItem(props) {
                 <span className="item-time">
                     <em>{dTime}</em>
                     <br />
-                    <em>{aTime}</em>
+                    <em className="em-light">{aTime} <i className="time-after">{dayAfter}</i></em>
                 </span>
                 <span className="item-stations">
                     <em>
@@ -26,7 +27,7 @@ function ListItem(props) {
                         {dStation}
                     </em>
                     <br />
-                    <em>
+                    <em className="em-light">
                         <i className="train-station train-end">终</i>
                         {aStation}
                     </em>
@@ -36,7 +37,7 @@ function ListItem(props) {
                         {trainNumber}
                     </em>
                     <br />
-                    <em>
+                    <em className="em-light">
                         {time}
                     </em>
                 </span>
@@ -50,7 +51,15 @@ function ListItem(props) {
     )
 }
 ListItem.propTypes = {
-    
+    dTime: PropTypes.string.isRequired,
+    aTime: PropTypes.string.isRequired,
+    dStation: PropTypes.string.isRequired,
+    aStation: PropTypes.string.isRequired,
+    trainNumber: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    priceMsg: PropTypes.string.isRequired,
+    dayAfter: PropTypes.string.isRequired,
 };
 
 
