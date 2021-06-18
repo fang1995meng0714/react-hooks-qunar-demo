@@ -14,7 +14,9 @@ import {
     setTrainList,
     setHighSpeed,
     toggleHighSpeed,
-    toggleOnlyTickets
+    toggleOnlyTickets,
+    setTicketTypes,
+    setTrainTypes
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -32,7 +34,9 @@ function App(props) {
         departDate, 
         orderType, 
         highSpeed,
-        onlyTickets
+        onlyTickets,
+        ticketTypes,
+        trainTypes,
     } = props;
     const onBack = useCallback(() => {
         window.history.back();
@@ -59,7 +63,6 @@ function App(props) {
             highSpeed: highSpeed,
             orderType: orderType
         }
-        console.log(queryJson)
         axios.post("/rest/query", JSON.stringify({queryJson}))
             .then((res) => {
                 let result = res.data.data;
@@ -77,6 +80,8 @@ function App(props) {
                     },
                 } = result;
                 dispatch(setTrainList(trains));
+                dispatch(setTicketTypes(ticketType));
+                dispatch(setTrainTypes(trainType));
             })
     }, [
         from, 
@@ -84,7 +89,7 @@ function App(props) {
         departDate,
         highSpeed,
         orderType,
-        onlyTickets
+        onlyTickets,
     ])
 
     const bottomCbs = useMemo(() => {
@@ -110,6 +115,8 @@ function App(props) {
                 orderType={orderType}
                 highSpeed={highSpeed}
                 onlyTickets={onlyTickets}
+                ticketTypes={ticketTypes}
+                trainTypes={trainTypes}
                 {...bottomCbs}
             />
         </div>

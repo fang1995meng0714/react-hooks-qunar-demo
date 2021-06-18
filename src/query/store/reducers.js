@@ -6,7 +6,9 @@ import {
     ACTION_SET_ORDER_TYPE,
     ACTION_SET_TRAIN_LIST,
     ACTION_SET_HIGH_SPEED,
-    ACTION_SET_ONLY_TICKETS
+    ACTION_SET_ONLY_TICKETS,
+    ACTION_SET_TICKET_TYPES,
+    ACTION_SET_TRAIN_TYPES
 } from "./actions";
 
 export default {
@@ -61,5 +63,21 @@ export default {
             return value;
         }
         return state; 
+    },
+    ticketTypes(state=[], action) {
+        const {type, value} = action;
+        
+        if(type === ACTION_SET_TICKET_TYPES) {
+            return value;
+        }
+        return state; 
+    },
+    trainTypes(state=[], action) {
+        const {type, value} = action;
+        
+        if(type === ACTION_SET_TRAIN_TYPES) {
+            return value;
+        }
+        return state;
     }
 }

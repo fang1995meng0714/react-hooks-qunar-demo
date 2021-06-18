@@ -13,7 +13,10 @@ export default createStore(
         orderType: ORDER_DEPART,
         trainList: [],
         highSpeed: false,
-        onlyTickets: false
+        onlyTickets: false,
+        ticketTypes: [],
+        trainTypes: []
+        // isFiltersVisible: false
     },
     applyMiddleware(thunk)
 )

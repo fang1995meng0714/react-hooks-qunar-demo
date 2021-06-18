@@ -7,6 +7,8 @@ export const ACTION_SET_ORDER_TYPE = 'SET_ORDER_TYPE';
 export const ACTION_SET_TRAIN_LIST = 'SET_TRAIN_LIST';
 export const ACTION_SET_HIGH_SPEED = 'SET_HIGH_SPEED';
 export const ACTION_SET_ONLY_TICKETS = 'SET_ONLY_TICKETS';
+export const ACTION_SET_TICKET_TYPES = 'SET_TICKET_TYPES';
+export const ACTION_SET_TRAIN_TYPES = 'SET_TRAIN_TYPES';
 
 export function setFrom(from) {
     return {
@@ -75,4 +77,18 @@ export function toggleOnlyTickets() {
             value: !onlyTickets
         })
     }
+}
+
+export function setTicketTypes(ticketTypes) {
+    return {
+        type: ACTION_SET_TICKET_TYPES,
+        value: ticketTypes
+    }
+}
+
+export function setTrainTypes(trainTypes) {
+    return {
+        type: ACTION_SET_TRAIN_TYPES,
+        value: trainTypes,
+    };
 }
