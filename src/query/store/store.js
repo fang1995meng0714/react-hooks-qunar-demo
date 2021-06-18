@@ -12,7 +12,8 @@ export default createStore(
         departDate: h0(new Date()),
         orderType: ORDER_DEPART,
         trainList: [],
-        highSpeed: false
+        highSpeed: false,
+        onlyTickets: false
     },
     applyMiddleware(thunk)
 )

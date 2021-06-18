@@ -8,8 +8,10 @@ function Bottom(props) {
     const {
             toggleOrderType, 
             toggleHighSpeed,
+            toggleOnlyTickets,
             orderType, 
-            highSpeed
+            highSpeed,
+            onlyTickets
         } = props;
 
     return (
@@ -29,8 +31,11 @@ function Bottom(props) {
                     <i className="icon">{highSpeed ? '\uf43f' : '\uf43e'}</i>
                         只看高铁动车
                 </span>
-                <span className="item">
-                    <i className="icon">&#xf43d;</i>
+                <span
+                    className={classnames('item', { 'item-on': onlyTickets })}
+                    onClick={toggleOnlyTickets}
+                >
+                    <i className="icon">{onlyTickets ? '\uf43d' : '\uf43c'}</i>
                     只看有票
                 </span>
                 <span className="item">
@@ -44,7 +49,10 @@ function Bottom(props) {
 
 export default Bottom;
 Bottom.propTypes = {
-    toggleOrderType: PropTypes.func.isRequired, 
+    toggleOrderType: PropTypes.func.isRequired,
+    toggleHighSpeed: PropTypes.func.isRequired,
+    toggleOnlyTickets: PropTypes.func.isRequired,
     orderType: PropTypes.number.isRequired, 
-    highSpeed: PropTypes.bool.isRequired
+    highSpeed: PropTypes.bool.isRequired,
+    onlyTickets: PropTypes.bool.isRequired,
 }

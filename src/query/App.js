@@ -13,7 +13,8 @@ import {
     toggleOrderType,
     setTrainList,
     setHighSpeed,
-    toggleHighSpeed
+    toggleHighSpeed,
+    toggleOnlyTickets
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -23,7 +24,16 @@ import useNav from "../costom-hooks/useNav";
 import { useMemo } from 'react';
 
 function App(props) {
-    const {trainList, from, to,dispatch, departDate, orderType, highSpeed} = props;
+    const {
+        trainList, 
+        from, 
+        to,
+        dispatch, 
+        departDate, 
+        orderType, 
+        highSpeed,
+        onlyTickets
+    } = props;
     const onBack = useCallback(() => {
         window.history.back();
     }, []);
@@ -73,13 +83,15 @@ function App(props) {
         to,
         departDate,
         highSpeed,
-        orderType
+        orderType,
+        onlyTickets
     ])
 
     const bottomCbs = useMemo(() => {
         return bindActionCreators({
             toggleOrderType,
-            toggleHighSpeed
+            toggleHighSpeed,
+            toggleOnlyTickets
         },dispatch)
     }, [])
 
@@ -97,6 +109,7 @@ function App(props) {
             <Bottom 
                 orderType={orderType}
                 highSpeed={highSpeed}
+                onlyTickets={onlyTickets}
                 {...bottomCbs}
             />
         </div>
