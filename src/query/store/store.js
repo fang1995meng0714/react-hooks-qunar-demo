@@ -15,7 +15,8 @@ export default createStore(
         highSpeed: false,
         onlyTickets: false,
         ticketTypes: [],
-        trainTypes: []
+        trainTypes: [],
+        checkedTicketTypes: {}
         // isFiltersVisible: false
     },
     applyMiddleware(thunk)

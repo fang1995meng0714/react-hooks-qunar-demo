@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {ORDER_DEPART} from "./../../store/actions";
 import './Bottom.css';
+import { useReducer } from 'react';
 
 const Filter = memo(function Filter(props) {
-    const {name} = props;
+    const {name, checked, value, dispatch} = props;
 
     return (
-        <li>
+        <li 
+            className={classnames({checked})}
+            onClick={() => dispatch({value: value, type: 'toggle'})}
+        >
             {name}
         </li>
     )
@@ -16,13 +20,13 @@ const Filter = memo(function Filter(props) {
 
 Filter.propTypes = {
     name: PropTypes.string.isRequired,
-    // checked: PropTypes.bool.isRequired,
-    // value: PropTypes.string.isRequired,
-    // dispatch: PropTypes.func.isRequired,
+    checked: PropTypes.bool.isRequired,
+    value: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired,
 }
 
 const Option = memo(function Option (props) {
-    const {title, options} = props
+    const {title, options, checkedMap, dispatch} = props
     return (
         <div className="option">
             <h3>{title}</h3>
@@ -33,6 +37,8 @@ const Option = memo(function Option (props) {
                             <Filter 
                                 key={option.value}
                                 {...option}
+                                checked={option.value in checkedMap}
+                                dispatch={dispatch}
                             />
                         )
                     })
@@ -45,30 +51,72 @@ const Option = memo(function Option (props) {
 Option.propTypes = {
     title: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
-    // checkedMap: PropTypes.object.isRequired,
-    // dispatch: PropTypes.func.isRequired,
+    checkedMap: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
 };
 
+function checkedReducer(state, action) {
+    const {type, value} = action;
+    let newState;
+
+    switch(type) {
+        case "toggle":
+            newState = {...state};
+            if(value in newState) {
+                delete newState[value]
+            } else {
+                newState[value] = true
+            }
+            return newState;
+        case 'reset':
+            return {};
+        default:
+    }
+
+    return state;
+}
+
 function BottomModal(props) {
-    const {ticketTypes, trainTypes} = props;
-    
+    const {
+        ticketTypes, 
+        trainTypes,
+        checkedTicketTypes
+    } = props;
+
+    const [
+        localCheckedTicketTypes,
+        loaclCheckedTicketTypesDispatch
+    ] = useReducer(checkedReducer, checkedTicketTypes, checkedTicketTypes => {
+        return {
+            ...checkedTicketTypes
+        }
+    })
+
     const optionGroup = [
         {
             title: "坐席类型",
-            options: ticketTypes
+            options: ticketTypes,
+            checkedMap: localCheckedTicketTypes,
+            dispatch: loaclCheckedTicketTypesDispatch
         },
         {
             title: "车次类型",
-            options: trainTypes
+            options: trainTypes,
+            checkedMap: localCheckedTicketTypes,
+            dispatch: loaclCheckedTicketTypesDispatch
         },
         {
             title: "出发车站",
-            options: ticketTypes
+            options: ticketTypes,
+            checkedMap: localCheckedTicketTypes,
+            dispatch: loaclCheckedTicketTypesDispatch
         },
         {
             title: "到达车站",
-            options: ticketTypes
-        },
+            options: ticketTypes,
+            checkedMap: localCheckedTicketTypes,
+            dispatch: loaclCheckedTicketTypesDispatch
+        }
     ]
     return (
         <div className="bottom-modal">
@@ -163,4 +211,6 @@ Bottom.propTypes = {
 
     ticketTypes: PropTypes.array.isRequired,
     trainTypes: PropTypes.array.isRequired,
+    checkedTicketTypes: PropTypes.object.isRequired,
+    setCheckedTicketTypes: PropTypes.func.isRequired,
 }

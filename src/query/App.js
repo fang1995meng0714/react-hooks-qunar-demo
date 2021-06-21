@@ -16,7 +16,8 @@ import {
     toggleHighSpeed,
     toggleOnlyTickets,
     setTicketTypes,
-    setTrainTypes
+    setTrainTypes,
+    setCheckedTicketTypes
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -37,6 +38,7 @@ function App(props) {
         onlyTickets,
         ticketTypes,
         trainTypes,
+        checkedTicketTypes
     } = props;
     const onBack = useCallback(() => {
         window.history.back();
@@ -96,7 +98,8 @@ function App(props) {
         return bindActionCreators({
             toggleOrderType,
             toggleHighSpeed,
-            toggleOnlyTickets
+            toggleOnlyTickets,
+            setCheckedTicketTypes
         },dispatch)
     }, [])
 
@@ -117,6 +120,7 @@ function App(props) {
                 onlyTickets={onlyTickets}
                 ticketTypes={ticketTypes}
                 trainTypes={trainTypes}
+                checkedTicketTypes={checkedTicketTypes}
                 {...bottomCbs}
             />
         </div>

@@ -8,7 +8,8 @@ import {
     ACTION_SET_HIGH_SPEED,
     ACTION_SET_ONLY_TICKETS,
     ACTION_SET_TICKET_TYPES,
-    ACTION_SET_TRAIN_TYPES
+    ACTION_SET_TRAIN_TYPES,
+    ACTION_SET_CHECKED_TICKET_TYPES
 } from "./actions";
 
 export default {
@@ -79,5 +80,14 @@ export default {
             return value;
         }
         return state;
+    },
+    checkedTicketTypes(state = {}, action) {
+        const {type, value} = action;
+
+        if(type === ACTION_SET_CHECKED_TICKET_TYPES) {
+            return value;
+        }
+
+        return state
     }
 }
