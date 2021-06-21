@@ -10,6 +10,8 @@ export const ACTION_SET_ONLY_TICKETS = 'SET_ONLY_TICKETS';
 export const ACTION_SET_TICKET_TYPES = 'SET_TICKET_TYPES';
 export const ACTION_SET_TRAIN_TYPES = 'SET_TRAIN_TYPES';
 export const ACTION_SET_CHECKED_TICKET_TYPES = 'SET_CHECKED_TICKET_TYPES';
+export const ACTION_SET_DEPART_STATIONS = 'SET_DEPART_STATIONS';
+export const ACTION_SET_ARRIVE_STATIONS = 'SET_ARRIVE_STATIONS';
 
 export function setFrom(from) {
     return {
@@ -98,5 +100,19 @@ export function setCheckedTicketTypes(checkedTicketTypes) {
     return {
         type: ACTION_SET_CHECKED_TICKET_TYPES,
         value: checkedTicketTypes,
+    };
+}
+
+export function setDepartStations(departStations) {
+    return {
+        type: ACTION_SET_DEPART_STATIONS,
+        value: departStations,
+    };
+}
+
+export function setArriveStations(arriveStations) {
+    return {
+        type: ACTION_SET_ARRIVE_STATIONS,
+        value: arriveStations,
     };
 }

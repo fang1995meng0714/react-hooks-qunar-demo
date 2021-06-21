@@ -17,7 +17,9 @@ import {
     toggleOnlyTickets,
     setTicketTypes,
     setTrainTypes,
-    setCheckedTicketTypes
+    setCheckedTicketTypes,
+    setDepartStations,
+    setArriveStations
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -38,7 +40,10 @@ function App(props) {
         onlyTickets,
         ticketTypes,
         trainTypes,
-        checkedTicketTypes
+        departStations,
+        arriveStations,
+        checkedTicketTypes,
+        checkedTrainTypes,
     } = props;
     const onBack = useCallback(() => {
         window.history.back();
@@ -84,6 +89,8 @@ function App(props) {
                 dispatch(setTrainList(trains));
                 dispatch(setTicketTypes(ticketType));
                 dispatch(setTrainTypes(trainType));
+                dispatch(setDepartStations(depStation))
+                dispatch(setArriveStations(arrStation))
             })
     }, [
         from, 
@@ -121,6 +128,9 @@ function App(props) {
                 ticketTypes={ticketTypes}
                 trainTypes={trainTypes}
                 checkedTicketTypes={checkedTicketTypes}
+                checkedTrainTypes={checkedTrainTypes}
+                departStations={departStations}
+                arriveStations={arriveStations}
                 {...bottomCbs}
             />
         </div>

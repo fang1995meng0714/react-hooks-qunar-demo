@@ -9,7 +9,9 @@ import {
     ACTION_SET_ONLY_TICKETS,
     ACTION_SET_TICKET_TYPES,
     ACTION_SET_TRAIN_TYPES,
-    ACTION_SET_CHECKED_TICKET_TYPES
+    ACTION_SET_CHECKED_TICKET_TYPES,
+    ACTION_SET_DEPART_STATIONS,
+    ACTION_SET_ARRIVE_STATIONS
 } from "./actions";
 
 export default {
@@ -88,6 +90,27 @@ export default {
             return value;
         }
 
-        return state
+        return state;
+    },
+    checkedTrainTypes(state = {}, action) {
+        return state;
+    },
+    departStations(state = [], action) {
+        const {type, value} = action;
+
+        if(type === ACTION_SET_DEPART_STATIONS) {
+            return value;
+        }
+
+        return state;
+    },
+    arriveStations(state = [], action) {
+        const {type, value} = action;
+
+        if(type === ACTION_SET_ARRIVE_STATIONS) {
+            return value;
+        }
+
+        return state;
     }
 }
