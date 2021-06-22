@@ -119,4 +119,7 @@ export default {
     checkedArriveStations(state = {}, action) {
         return state;
     },
+    departTimeStart(state = 0, action) {
+        return state;
+    }
 }

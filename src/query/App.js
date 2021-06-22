@@ -45,7 +45,8 @@ function App(props) {
         checkedTicketTypes,
         checkedTrainTypes,
         checkedDepartStations,
-        checkedArriveStations
+        checkedArriveStations,
+        departTimeStart
     } = props;
     const onBack = useCallback(() => {
         window.history.back();
@@ -135,6 +136,7 @@ function App(props) {
                 arriveStations={arriveStations}
                 checkedDepartStations={checkedDepartStations}
                 checkedArriveStations={checkedArriveStations}
+                departTimeStart={departTimeStart}
                 {...bottomCbs}
             />
         </div>

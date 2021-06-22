@@ -1,6 +1,7 @@
-import React, {memo} from 'react';
+import React, {memo, useState} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Slider from '../slider/Slider.jsx';
 import {ORDER_DEPART} from "./../../store/actions";
 import './Bottom.css';
 import { useReducer } from 'react';
@@ -85,7 +86,8 @@ function BottomModal(props) {
         checkedTicketTypes,
         checkedTrainTypes,
         checkedDepartStations,
-        checkedArriveStations
+        checkedArriveStations,
+        departTimeStart
     } = props;
 
     const [
@@ -123,12 +125,9 @@ function BottomModal(props) {
             ...checkedArriveStations
         }
     })
-    console.log({
-        localCheckedTicketTypes,
-        localCheckedTrainTypes,
-        localCheckedDepartStations,
-        localCheckedArriveStations
-    })
+
+    const [localDepartTimeStart, setLocalDepartTimeStart] = useState(departTimeStart)
+
     const optionGroup = [
         {
             title: "坐席类型",
@@ -163,19 +162,19 @@ function BottomModal(props) {
                         <span>
                             重置
                         </span>
-                        <span>
+                        <span className="ok">
                             确定
                         </span>
                     </div>
                     <div className="options">
-                        {
-                            optionGroup.map(option => (
-                                <Option 
-                                    key={option.title}
-                                    {...option}
-                                />
-                            ))
-                        }
+                        {optionGroup.map(option => (
+                            <Option  key={option.title} {...option} />
+                        ))}
+                        <Slider 
+                            title="出发时间"
+                            currentStartHours={localDepartTimeStart}
+                            onStartChanged={setLocalDepartTimeStart}
+                        />
                     </div>
                 </div>
             </div>
@@ -208,7 +207,8 @@ function Bottom(props) {
             departStations,
             arriveStations,
             checkedDepartStations,
-            checkedArriveStations
+            checkedArriveStations,
+            departTimeStart
         } = props;
 
     return (
@@ -249,6 +249,7 @@ function Bottom(props) {
                 arriveStations={arriveStations}
                 checkedDepartStations={checkedDepartStations}
                 checkedArriveStations={checkedArriveStations}
+                departTimeStart={departTimeStart}
             />
         </div>
     )
@@ -271,4 +272,5 @@ Bottom.propTypes = {
     setCheckedTicketTypes: PropTypes.func.isRequired,
     checkedTrainTypes: PropTypes.object.isRequired,
     checkedDepartStations: PropTypes.object.isRequired,
+    departTimeStart: PropTypes.number.isRequired, 
 }

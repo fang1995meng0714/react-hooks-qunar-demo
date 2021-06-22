@@ -12,6 +12,7 @@ export const ACTION_SET_TRAIN_TYPES = 'SET_TRAIN_TYPES';
 export const ACTION_SET_CHECKED_TICKET_TYPES = 'SET_CHECKED_TICKET_TYPES';
 export const ACTION_SET_DEPART_STATIONS = 'SET_DEPART_STATIONS';
 export const ACTION_SET_ARRIVE_STATIONS = 'SET_ARRIVE_STATIONS';
+export const ACTION_SET_DEPART_TIME_START = 'SET_DEPART_TIME_START';
 
 export function setFrom(from) {
     return {
@@ -114,5 +115,11 @@ export function setArriveStations(arriveStations) {
     return {
         type: ACTION_SET_ARRIVE_STATIONS,
         value: arriveStations,
+    };
+}
+export function setDepartTimeStart(departTimeStart) {
+    return {
+        type: ACTION_SET_DEPART_TIME_START,
+        value: departTimeStart,
     };
 }
