@@ -112,5 +112,11 @@ export default {
         }
 
         return state;
-    }
+    },
+    checkedDepartStations(state = {}, action) {
+        return state;
+    },
+    checkedArriveStations(state = {}, action) {
+        return state;
+    },
 }

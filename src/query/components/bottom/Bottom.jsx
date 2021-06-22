@@ -83,7 +83,9 @@ function BottomModal(props) {
         departStations,
         arriveStations,
         checkedTicketTypes,
-        checkedTrainTypes
+        checkedTrainTypes,
+        checkedDepartStations,
+        checkedArriveStations
     } = props;
 
     const [
@@ -104,6 +106,29 @@ function BottomModal(props) {
         }
     })
 
+    const [
+        localCheckedDepartStations,
+        localCheckedDepartStationsDispatch
+    ] = useReducer(checkedReducer, checkedDepartStations, checkedDepartStations => {
+        return {
+            ...checkedDepartStations
+        }
+    })
+
+    const [
+        localCheckedArriveStations,
+        localCheckedArriveStationsDispatch
+    ] = useReducer(checkedReducer, checkedArriveStations, checkedArriveStations => {
+        return {
+            ...checkedArriveStations
+        }
+    })
+    console.log({
+        localCheckedTicketTypes,
+        localCheckedTrainTypes,
+        localCheckedDepartStations,
+        localCheckedArriveStations
+    })
     const optionGroup = [
         {
             title: "坐席类型",
@@ -120,14 +145,14 @@ function BottomModal(props) {
         {
             title: "出发车站",
             options: departStations,
-            checkedMap: localCheckedTicketTypes,
-            dispatch: loaclCheckedTicketTypesDispatch
+            checkedMap: localCheckedDepartStations,
+            dispatch: localCheckedDepartStationsDispatch
         },
         {
             title: "到达车站",
             options: arriveStations,
-            checkedMap: localCheckedTicketTypes,
-            dispatch: loaclCheckedTicketTypesDispatch
+            checkedMap: localCheckedArriveStations,
+            dispatch: localCheckedArriveStationsDispatch
         }
     ]
     return (
@@ -165,6 +190,7 @@ BottomModal.propTypes = {
     arriveStations: PropTypes.array.isRequired,
     checkedTicketTypes: PropTypes.object.isRequired,
     checkedTrainTypes: PropTypes.object.isRequired,
+    checkedDepartStations: PropTypes.object.isRequired,
 }
 
 function Bottom(props) {
@@ -180,7 +206,9 @@ function Bottom(props) {
             checkedTicketTypes,
             checkedTrainTypes,
             departStations,
-            arriveStations
+            arriveStations,
+            checkedDepartStations,
+            checkedArriveStations
         } = props;
 
     return (
@@ -219,6 +247,8 @@ function Bottom(props) {
                 checkedTrainTypes={checkedTrainTypes}
                 departStations={departStations}
                 arriveStations={arriveStations}
+                checkedDepartStations={checkedDepartStations}
+                checkedArriveStations={checkedArriveStations}
             />
         </div>
     )
@@ -240,4 +270,5 @@ Bottom.propTypes = {
     checkedTicketTypes: PropTypes.object.isRequired,
     setCheckedTicketTypes: PropTypes.func.isRequired,
     checkedTrainTypes: PropTypes.object.isRequired,
+    checkedDepartStations: PropTypes.object.isRequired,
 }
