@@ -22,7 +22,8 @@ export default createStore(
         checkedTrainTypes: {},
         checkedDepartStations: {},
         checkedArriveStations: {},
-        departTimeStart: 0
+        departTimeStart: 0,
+        departTimeEnd: 24
         // isFiltersVisible: false
     },
     applyMiddleware(thunk)

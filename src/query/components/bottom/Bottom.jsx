@@ -87,7 +87,8 @@ function BottomModal(props) {
         checkedTrainTypes,
         checkedDepartStations,
         checkedArriveStations,
-        departTimeStart
+        departTimeStart,
+        departTimeEnd
     } = props;
 
     const [
@@ -127,6 +128,7 @@ function BottomModal(props) {
     })
 
     const [localDepartTimeStart, setLocalDepartTimeStart] = useState(departTimeStart)
+    const [localDepartTimeEnd, setLocalDepartTimeEnd] = useState(departTimeEnd);
 
     const optionGroup = [
         {
@@ -173,7 +175,9 @@ function BottomModal(props) {
                         <Slider 
                             title="出发时间"
                             currentStartHours={localDepartTimeStart}
+                            currentEndHours={localDepartTimeEnd}
                             onStartChanged={setLocalDepartTimeStart}
+                            onEndChanged={setLocalDepartTimeEnd}
                         />
                     </div>
                 </div>
@@ -190,6 +194,8 @@ BottomModal.propTypes = {
     checkedTicketTypes: PropTypes.object.isRequired,
     checkedTrainTypes: PropTypes.object.isRequired,
     checkedDepartStations: PropTypes.object.isRequired,
+    departTimeStart: PropTypes.number.isRequired,
+    departTimeEnd: PropTypes.number.isRequired,
 }
 
 function Bottom(props) {
@@ -208,7 +214,8 @@ function Bottom(props) {
             arriveStations,
             checkedDepartStations,
             checkedArriveStations,
-            departTimeStart
+            departTimeStart,
+            departTimeEnd
         } = props;
 
     return (
@@ -250,6 +257,7 @@ function Bottom(props) {
                 checkedDepartStations={checkedDepartStations}
                 checkedArriveStations={checkedArriveStations}
                 departTimeStart={departTimeStart}
+                departTimeEnd={departTimeEnd}
             />
         </div>
     )
@@ -272,5 +280,6 @@ Bottom.propTypes = {
     setCheckedTicketTypes: PropTypes.func.isRequired,
     checkedTrainTypes: PropTypes.object.isRequired,
     checkedDepartStations: PropTypes.object.isRequired,
-    departTimeStart: PropTypes.number.isRequired, 
+    departTimeStart: PropTypes.number.isRequired,
+    departTimeEnd: PropTypes.number.isRequired,
 }

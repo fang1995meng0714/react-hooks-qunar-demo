@@ -121,5 +121,8 @@ export default {
     },
     departTimeStart(state = 0, action) {
         return state;
-    }
+    },
+    departTimeEnd(state = 0, action) {
+        return state;
+    },
 }

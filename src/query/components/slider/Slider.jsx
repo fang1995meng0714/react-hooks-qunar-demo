@@ -1,12 +1,16 @@
 import React, {memo, useRef, useEffect, useState, useMemo} from 'react';
 import './Slider.css';
 import PropTypes from 'prop-types';
+import leftPad from 'left-pad';
 import useWinSize from '../../../costom-hooks/useWinSize';
 
 const Slider = memo(function Slider(props) {
     const {
         title,
         currentStartHours,
+        currentEndHours,
+        onStartChanged,
+        onEndChanged,
     } = props;
     
     const winSize = useWinSize();
@@ -21,6 +25,20 @@ const Slider = memo(function Slider(props) {
     const rangeWidth = useRef();
 
     const [start, setStart] = useState(() => (currentStartHours / 24) * 100);
+    const [end, setEnd] = useState(() =>  (currentEndHours / 24) * 100);
+
+    const prevCurrentStartHours = useRef(currentStartHours);
+    const prevCurrentEndHours = useRef(currentEndHours);
+
+    if (prevCurrentStartHours.current !== currentStartHours) {
+        setStart((currentStartHours / 24) * 100);
+        prevCurrentStartHours.current = currentStartHours;
+    }
+
+    if (prevCurrentEndHours.current !== currentEndHours) {
+        setEnd((currentEndHours / 24) * 100);
+        prevCurrentEndHours.current = currentEndHours;
+    }
 
     const startPercent = useMemo(() => {
         if(start > 100) {
@@ -33,6 +51,34 @@ const Slider = memo(function Slider(props) {
 
         return start;
     }, [start])
+
+    const endPercent = useMemo(() => {
+        if (end > 100) {
+            return 100;
+        }
+
+        if (end < 0) {
+            return 0;
+        }
+
+        return end;
+    }, [end]);
+
+    const startHours = useMemo(() => {
+        return Math.round((startPercent * 24) / 100);
+    }, [startPercent]);
+
+    const endHours = useMemo(() => {
+        return Math.round((endPercent * 24) / 100);
+    }, [endPercent])
+
+    const startText = useMemo(() => {
+        return leftPad(startHours, 2, "0") + ":00";
+    }, [startHours])
+
+    const endText = useMemo(() => {
+        return leftPad(endHours, 2, "0") + ":00";
+    }, [endHours])
 
     function onStartTouchBegin(e) {
         const touch = e.targetTouches[0];
@@ -49,12 +95,15 @@ const Slider = memo(function Slider(props) {
         const distance = touch.pageX - lastStartX.current;
         lastStartX.current = touch.pageX;
 
-        setStart(() => start + (distance / rangeWidth.current) * 100);
+        setStart(start => start + (distance / rangeWidth.current) * 100);
     }
 
     function onEndTouchMove(e) {
         const touch = e.targetTouches[0];
+        const distance = touch.pageX - lastEndX.current;
         lastEndX.current = touch.pageX;
+
+        setEnd(end => end + (distance / rangeWidth.current) * 100);
     }
 
     useEffect(() => {
@@ -89,14 +138,14 @@ const Slider = memo(function Slider(props) {
                         ref={startHandle}
                         style={{left: startPercent + "%"}}
                     >
-                        <span>3点</span>
+                        <span>{startText}</span>
                     </i>
                     <i 
                         className="slider-handle"
                         ref={endHandle}
-                        style={{left: "100%"}}
+                        style={{left: endPercent + "%"}}
                     >
-                        <span>3点</span>
+                        <span>{endText}</span>
                     </i>
                 </div>
             </div>
@@ -107,7 +156,9 @@ const Slider = memo(function Slider(props) {
 Slider.propTypes = {
     title: PropTypes.string.isRequired,
     currentStartHours: PropTypes.number.isRequired,
+    currentEndHours: PropTypes.number.isRequired,
     onStartChanged: PropTypes.func.isRequired,
+    onEndChanged: PropTypes.func.isRequired,
 }
 
 export default Slider;
