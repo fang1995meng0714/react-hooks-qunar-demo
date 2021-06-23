@@ -131,7 +131,13 @@ const Slider = memo(function Slider(props) {
             <h3>{title}</h3>
             <div className="range-slider">
                 <div className="slider" ref={range}>
-                    <div className="slider-range">
+                    <div 
+                        className="slider-range"
+                        style={{
+                            left: startPercent + "%",
+                            width: endPercent - startPercent + '%',
+                        }}
+                    >
                     </div>
                     <i 
                         className="slider-handle"

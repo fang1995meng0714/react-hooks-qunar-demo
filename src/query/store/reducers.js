@@ -122,7 +122,13 @@ export default {
     departTimeStart(state = 0, action) {
         return state;
     },
-    departTimeEnd(state = 0, action) {
+    departTimeEnd(state = 24, action) {
+        return state;
+    },
+    arriveTimeStart(state = 0, action) {
+        return state;
+    },
+    arriveTimeEnd(state = 0, action) {
         return state;
     },
 }

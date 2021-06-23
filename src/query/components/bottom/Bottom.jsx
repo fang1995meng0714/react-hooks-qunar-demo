@@ -88,7 +88,9 @@ function BottomModal(props) {
         checkedDepartStations,
         checkedArriveStations,
         departTimeStart,
-        departTimeEnd
+        departTimeEnd,
+        arriveTimeStart,
+        arriveTimeEnd
     } = props;
 
     const [
@@ -129,6 +131,8 @@ function BottomModal(props) {
 
     const [localDepartTimeStart, setLocalDepartTimeStart] = useState(departTimeStart)
     const [localDepartTimeEnd, setLocalDepartTimeEnd] = useState(departTimeEnd);
+    const [laoclArriveTimeStart, setLaoclArriveTimeStart] = useState(arriveTimeStart);
+    const [laoclArriveTimeEnd, setLaoclArriveTimeEnd] = useState(arriveTimeEnd);
 
     const optionGroup = [
         {
@@ -179,6 +183,13 @@ function BottomModal(props) {
                             onStartChanged={setLocalDepartTimeStart}
                             onEndChanged={setLocalDepartTimeEnd}
                         />
+                        <Slider 
+                            title="到达时间"
+                            currentStartHours={laoclArriveTimeStart}
+                            currentEndHours={laoclArriveTimeEnd}
+                            onStartChanged={setLaoclArriveTimeStart}
+                            onEndChanged={setLaoclArriveTimeEnd}
+                        />
                     </div>
                 </div>
             </div>
@@ -215,7 +226,9 @@ function Bottom(props) {
             checkedDepartStations,
             checkedArriveStations,
             departTimeStart,
-            departTimeEnd
+            departTimeEnd,
+            arriveTimeStart,
+            arriveTimeEnd
         } = props;
 
     return (
@@ -258,6 +271,8 @@ function Bottom(props) {
                 checkedArriveStations={checkedArriveStations}
                 departTimeStart={departTimeStart}
                 departTimeEnd={departTimeEnd}
+                arriveTimeStart={arriveTimeStart}
+                arriveTimeEnd={arriveTimeEnd}
             />
         </div>
     )
@@ -282,4 +297,6 @@ Bottom.propTypes = {
     checkedDepartStations: PropTypes.object.isRequired,
     departTimeStart: PropTypes.number.isRequired,
     departTimeEnd: PropTypes.number.isRequired,
+    arriveTimeStart: PropTypes.number.isRequired,
+    arriveTimeEnd: PropTypes.number.isRequired,
 }
