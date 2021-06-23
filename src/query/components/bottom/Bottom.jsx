@@ -5,6 +5,8 @@ import Slider from '../slider/Slider.jsx';
 import {ORDER_DEPART} from "./../../store/actions";
 import './Bottom.css';
 import { useReducer } from 'react';
+import { useMemo } from 'react';
+import { rest } from 'lodash';
 
 const Filter = memo(function Filter(props) {
     const {name, checked, value, dispatch} = props;
@@ -90,7 +92,15 @@ function BottomModal(props) {
         departTimeStart,
         departTimeEnd,
         arriveTimeStart,
-        arriveTimeEnd
+        arriveTimeEnd,
+        setCheckedTicketTypes,
+        setCheckedTrainTypes,
+        setCheckedDepartStations,
+        setCheckedArriveStations,
+        setDepartTimeStart,
+        setDepartTimeEnd,
+        setArriveTimeStart,
+        setArriveTimeEnd
     } = props;
 
     const [
@@ -131,8 +141,8 @@ function BottomModal(props) {
 
     const [localDepartTimeStart, setLocalDepartTimeStart] = useState(departTimeStart)
     const [localDepartTimeEnd, setLocalDepartTimeEnd] = useState(departTimeEnd);
-    const [laoclArriveTimeStart, setLaoclArriveTimeStart] = useState(arriveTimeStart);
-    const [laoclArriveTimeEnd, setLaoclArriveTimeEnd] = useState(arriveTimeEnd);
+    const [localArriveTimeStart, setLaoclArriveTimeStart] = useState(arriveTimeStart);
+    const [localArriveTimeEnd, setLaoclArriveTimeEnd] = useState(arriveTimeEnd);
 
     const optionGroup = [
         {
@@ -160,21 +170,77 @@ function BottomModal(props) {
             dispatch: localCheckedArriveStationsDispatch
         }
     ]
+
+    function sure() {
+        setCheckedTicketTypes(localCheckedTicketTypes);
+        setCheckedTrainTypes(localCheckedTrainTypes);
+        setCheckedDepartStations(localCheckedDepartStations);
+        setCheckedArriveStations(localCheckedArriveStations)
+
+        setDepartTimeStart(localDepartTimeStart);
+        setDepartTimeEnd(localDepartTimeEnd);
+
+        setArriveTimeStart(localArriveTimeStart);
+        setArriveTimeEnd(localArriveTimeEnd)
+    }
+
+    const isResetDisabled = useMemo(() => {
+        return (
+            Object.keys(localCheckedTicketTypes).length === 0 && 
+            Object.keys(localCheckedTrainTypes).length === 0 &&
+            Object.keys(localCheckedDepartStations).length === 0 &&
+            Object.keys(localCheckedArriveStations).length === 0 &&
+            localDepartTimeStart === 0 &&
+            localDepartTimeEnd === 24 &&
+            localArriveTimeStart === 0 &&
+            localArriveTimeEnd === 24
+        )
+    }, [
+        localCheckedTicketTypes,
+        localCheckedTrainTypes,
+        localCheckedDepartStations,
+        localCheckedArriveStations,
+        localDepartTimeStart,
+        localDepartTimeEnd,
+        localArriveTimeStart,
+        localArriveTimeEnd,
+    ])
+
+    function reset() {
+        if(isResetDisabled) {
+            return;
+        }
+
+        loaclCheckedTicketTypesDispatch({type: "reset"});
+        localCheckedTrainTypesDispatch({type: "reset"});
+        localCheckedDepartStationsDispatch({type: "reset"});
+        localCheckedArriveStationsDispatch({type: "reset"});
+
+        setLocalDepartTimeStart(0);
+        setLocalDepartTimeEnd(24);
+        setLaoclArriveTimeStart(0);
+        setLaoclArriveTimeEnd(24);
+    }
+
     return (
         <div className="bottom-modal">
             <div className="bottom-dialog">
                 <div className="bottom-dialog-content">
                     <div className="title">
-                        <span>
+                        <span
+                            className={classnames("reset", {
+                                disabled: isResetDisabled,
+                            })}
+                            onClick={reset}>
                             重置
                         </span>
-                        <span className="ok">
+                        <span className="ok" onClick={sure}>
                             确定
                         </span>
                     </div>
                     <div className="options">
                         {optionGroup.map(option => (
-                            <Option  key={option.title} {...option} />
+                            <Option key={option.title} {...option} />
                         ))}
                         <Slider 
                             title="出发时间"
@@ -185,8 +251,8 @@ function BottomModal(props) {
                         />
                         <Slider 
                             title="到达时间"
-                            currentStartHours={laoclArriveTimeStart}
-                            currentEndHours={laoclArriveTimeEnd}
+                            currentStartHours={localArriveTimeStart}
+                            currentEndHours={localArriveTimeEnd}
                             onStartChanged={setLaoclArriveTimeStart}
                             onEndChanged={setLaoclArriveTimeEnd}
                         />
@@ -207,6 +273,14 @@ BottomModal.propTypes = {
     checkedDepartStations: PropTypes.object.isRequired,
     departTimeStart: PropTypes.number.isRequired,
     departTimeEnd: PropTypes.number.isRequired,
+    setCheckedTicketTypes: PropTypes.func.isRequired,
+    setCheckedTrainTypes: PropTypes.func.isRequired,
+    setCheckedDepartStations: PropTypes.func.isRequired,
+    setCheckedArriveStations: PropTypes.func.isRequired,
+    setDepartTimeStart: PropTypes.func.isRequired,
+    setDepartTimeEnd: PropTypes.func.isRequired,
+    setArriveTimeStart: PropTypes.func.isRequired,
+    setArriveTimeEnd: PropTypes.func.isRequired
 }
 
 function Bottom(props) {
@@ -228,7 +302,15 @@ function Bottom(props) {
             departTimeStart,
             departTimeEnd,
             arriveTimeStart,
-            arriveTimeEnd
+            arriveTimeEnd,
+            setCheckedTicketTypes,
+            setCheckedTrainTypes,
+            setCheckedDepartStations,
+            setCheckedArriveStations,
+            setDepartTimeStart,
+            setDepartTimeEnd,
+            setArriveTimeStart,
+            setArriveTimeEnd
         } = props;
 
     return (
@@ -273,12 +355,19 @@ function Bottom(props) {
                 departTimeEnd={departTimeEnd}
                 arriveTimeStart={arriveTimeStart}
                 arriveTimeEnd={arriveTimeEnd}
+                setCheckedTicketTypes={setCheckedTicketTypes}
+                setCheckedTrainTypes={setCheckedTrainTypes}
+                setCheckedDepartStations={setCheckedDepartStations}
+                setCheckedArriveStations={setCheckedArriveStations}
+                setDepartTimeStart={setDepartTimeStart}
+                setDepartTimeEnd={setDepartTimeEnd}
+                setArriveTimeStart={setArriveTimeStart}
+                setArriveTimeEnd={setArriveTimeEnd}
             />
         </div>
     )
 }
 
-export default Bottom;
 Bottom.propTypes = {
     toggleOrderType: PropTypes.func.isRequired,
     toggleHighSpeed: PropTypes.func.isRequired,
@@ -299,4 +388,13 @@ Bottom.propTypes = {
     departTimeEnd: PropTypes.number.isRequired,
     arriveTimeStart: PropTypes.number.isRequired,
     arriveTimeEnd: PropTypes.number.isRequired,
+    setCheckedTrainTypes: PropTypes.func.isRequired,
+    setCheckedDepartStations: PropTypes.func.isRequired,
+    setCheckedArriveStations: PropTypes.func.isRequired,
+    setDepartTimeStart: PropTypes.func.isRequired,
+    setDepartTimeEnd: PropTypes.func.isRequired,
+    setArriveTimeStart: PropTypes.func.isRequired,
+    setArriveTimeEnd: PropTypes.func.isRequired
 }
+
+export default Bottom;

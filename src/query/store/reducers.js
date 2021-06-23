@@ -11,7 +11,14 @@ import {
     ACTION_SET_TRAIN_TYPES,
     ACTION_SET_CHECKED_TICKET_TYPES,
     ACTION_SET_DEPART_STATIONS,
-    ACTION_SET_ARRIVE_STATIONS
+    ACTION_SET_ARRIVE_STATIONS,
+    ACTION_SET_CHECKED_TRAIN_TYPES,
+    ACTION_SET_CHECKED_DEPART_STATIONS,
+    ACTION_SET_CHECKED_ARRIVE_STATIONS,
+    ACTION_SET_DEPART_TIME_START,
+    ACTION_SET_DEPART_TIME_END,
+    ACTION_SET_ARRIVE_TIME_START,
+    ACTION_SET_ARRIVE_TIME_END
 } from "./actions";
 
 export default {
@@ -85,7 +92,6 @@ export default {
     },
     checkedTicketTypes(state = {}, action) {
         const {type, value} = action;
-
         if(type === ACTION_SET_CHECKED_TICKET_TYPES) {
             return value;
         }
@@ -93,6 +99,12 @@ export default {
         return state;
     },
     checkedTrainTypes(state = {}, action) {
+        const {type, value} = action;
+
+        if(type === ACTION_SET_CHECKED_TRAIN_TYPES) {
+            return value;
+        }
+
         return state;
     },
     departStations(state = [], action) {
@@ -114,21 +126,57 @@ export default {
         return state;
     },
     checkedDepartStations(state = {}, action) {
+        const {type, value} = action;
+
+        if(type === ACTION_SET_CHECKED_DEPART_STATIONS) {
+            return value;
+        }
+
         return state;
     },
     checkedArriveStations(state = {}, action) {
+        const {type, value} = action;
+
+        if(type === ACTION_SET_CHECKED_ARRIVE_STATIONS) {
+            return value;
+        }
+
         return state;
     },
     departTimeStart(state = 0, action) {
+         const {type, value} = action;
+
+        if(type === ACTION_SET_DEPART_TIME_START) {
+            return value;
+        }
+
         return state;
     },
     departTimeEnd(state = 24, action) {
+         const {type, value} = action;
+
+        if(type === ACTION_SET_DEPART_TIME_END) {
+            return value;
+        }
+
         return state;
     },
     arriveTimeStart(state = 0, action) {
+         const {type, value} = action;
+
+        if(type === ACTION_SET_ARRIVE_TIME_START) {
+            return value;
+        }
+
         return state;
     },
     arriveTimeEnd(state = 0, action) {
+         const {type, value} = action;
+
+        if(type === ACTION_SET_ARRIVE_TIME_END) {
+            return value;
+        }
+
         return state;
     },
 }

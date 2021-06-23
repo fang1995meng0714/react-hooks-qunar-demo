@@ -126,6 +126,14 @@ const Slider = memo(function Slider(props) {
         }
     })
 
+    useEffect(() => {
+        onStartChanged(startHours)
+    }, [startHours])
+
+    useEffect(() => {
+        onEndChanged(endHours)
+    }, [endHours])
+
     return (
         <div className="option">
             <h3>{title}</h3>

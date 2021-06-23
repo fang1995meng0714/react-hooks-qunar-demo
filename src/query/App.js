@@ -20,6 +20,13 @@ import {
     setCheckedTicketTypes,
     setDepartStations,
     setArriveStations,
+    setCheckedTrainTypes,
+    setCheckedDepartStations,
+    setCheckedArriveStations,
+    setDepartTimeStart,
+    setDepartTimeEnd,
+    setArriveTimeStart,
+    setArriveTimeEnd
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -49,7 +56,7 @@ function App(props) {
         departTimeStart,
         departTimeEnd,
         arriveTimeStart,
-        arriveTimeEnd
+        arriveTimeEnd,
     } = props;
     const onBack = useCallback(() => {
         window.history.back();
@@ -112,7 +119,14 @@ function App(props) {
             toggleOrderType,
             toggleHighSpeed,
             toggleOnlyTickets,
-            setCheckedTicketTypes
+            setCheckedTicketTypes,
+            setCheckedTrainTypes,
+            setCheckedDepartStations,
+            setCheckedArriveStations,
+            setDepartTimeStart,
+            setDepartTimeEnd,
+            setArriveTimeStart,
+            setArriveTimeEnd
         },dispatch)
     }, [])
 
