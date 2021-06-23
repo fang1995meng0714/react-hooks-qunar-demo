@@ -61,9 +61,13 @@ export default {
     },
     highSpeed(state=false, action) {
         const {type, value} = action;
+        let checkedTrainTypes;
         
         if(type === ACTION_SET_HIGH_SPEED) {
             return value;
+        } else if(type === ACTION_SET_CHECKED_TRAIN_TYPES) {
+            checkedTrainTypes = value;
+            return Boolean(checkedTrainTypes[1] && checkedTrainTypes[5]);
         }
         return state;
     },
@@ -101,9 +105,24 @@ export default {
     },
     checkedTrainTypes(state = {}, action) {
         const {type, value} = action;
+        let highSpeed;
+        let newCheckedTrainTypes;
 
         if(type === ACTION_SET_CHECKED_TRAIN_TYPES) {
             return value;
+        } else if(type === ACTION_SET_HIGH_SPEED) {
+            highSpeed = value;
+            newCheckedTrainTypes = {...state};
+
+            if (highSpeed) {
+                newCheckedTrainTypes[1] = true;
+                newCheckedTrainTypes[5] = true;
+            } else {
+                delete newCheckedTrainTypes[1];
+                delete newCheckedTrainTypes[5];
+            }
+
+            return newCheckedTrainTypes;
         }
 
         return state;

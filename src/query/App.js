@@ -78,7 +78,6 @@ function App(props) {
     }, [])
 
     useEffect(() => {
-        console.log(checkedTicketTypes)
         const queryJson = {
             from: from,
             to: to,
@@ -95,7 +94,7 @@ function App(props) {
             arriveTimeStart,
             arriveTimeEnd,
         };
-        console.log(queryJson)
+
         axios.post("/rest/query", JSON.stringify({queryJson}))
             .then((res) => {
                 let result = res.data.data;
