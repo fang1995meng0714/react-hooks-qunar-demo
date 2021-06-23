@@ -19,6 +19,7 @@ export const ACTION_SET_ARRIVE_TIME_END = 'SET_ARRIVE_TIME_END';
 export const ACTION_SET_DEPART_TIME_END = 'SET_DEPART_TIME_END';
 export const ACTION_SET_CHECKED_DEPART_STATIONS = 'SET_CHECKED_DEPART_STATIONS';
 export const ACTION_SET_CHECKED_ARRIVE_STATIONS = 'SET_CHECKED_ARRIVE_STATIONS';
+export const ACTION_SET_IS_FILTERS_VISIBLE = 'SET_IS_FILTERS_VISIBLE';
 
 export function setFrom(from) {
     return {
@@ -171,4 +172,15 @@ export function setCheckedArriveStations(checkedArriveStations) {
         type: ACTION_SET_CHECKED_ARRIVE_STATIONS,
         value: checkedArriveStations,
     };
+}
+
+export function toggleIsFiltersVisible() {
+    return (dispatch, getState) => {
+        const {isFiltersVisible} = getState();
+
+        dispatch({
+            type: ACTION_SET_IS_FILTERS_VISIBLE,
+            value: !isFiltersVisible,
+        })
+    }
 }

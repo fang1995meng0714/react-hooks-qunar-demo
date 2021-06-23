@@ -26,7 +26,8 @@ import {
     setDepartTimeStart,
     setDepartTimeEnd,
     setArriveTimeStart,
-    setArriveTimeEnd
+    setArriveTimeEnd,
+    toggleIsFiltersVisible
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -57,6 +58,7 @@ function App(props) {
         departTimeEnd,
         arriveTimeStart,
         arriveTimeEnd,
+        isFiltersVisible
     } = props;
     const onBack = useCallback(() => {
         window.history.back();
@@ -76,13 +78,24 @@ function App(props) {
     }, [])
 
     useEffect(() => {
+        console.log(checkedTicketTypes)
         const queryJson = {
             from: from,
             to: to,
             date: dayjs(departDate).format('YYYY-MM-DD'),
             highSpeed: highSpeed,
-            orderType: orderType
-        }
+            orderType: orderType,
+            onlyTickets: onlyTickets,
+            checkedTicketTypes: Object.keys(checkedTicketTypes).join(),
+            checkedTrainTypes:Object.keys(checkedTrainTypes).join(),
+            checkedDepartStations:Object.keys(checkedDepartStations).join(),
+            checkedArriveStations:Object.keys(checkedArriveStations).join(),
+            departTimeStart,
+            departTimeEnd,
+            arriveTimeStart,
+            arriveTimeEnd,
+        };
+        console.log(queryJson)
         axios.post("/rest/query", JSON.stringify({queryJson}))
             .then((res) => {
                 let result = res.data.data;
@@ -112,6 +125,14 @@ function App(props) {
         highSpeed,
         orderType,
         onlyTickets,
+        checkedTicketTypes,
+        checkedTrainTypes,
+        checkedDepartStations,
+        checkedArriveStations,
+        departTimeStart,
+        departTimeEnd,
+        arriveTimeStart,
+        arriveTimeEnd,
     ])
 
     const bottomCbs = useMemo(() => {
@@ -126,7 +147,8 @@ function App(props) {
             setDepartTimeStart,
             setDepartTimeEnd,
             setArriveTimeStart,
-            setArriveTimeEnd
+            setArriveTimeEnd,
+            toggleIsFiltersVisible
         },dispatch)
     }, [])
 
@@ -157,6 +179,7 @@ function App(props) {
                 departTimeEnd={departTimeEnd}
                 arriveTimeStart={arriveTimeStart}
                 arriveTimeEnd={arriveTimeEnd}
+                isFiltersVisible={isFiltersVisible}
                 {...bottomCbs}
             />
         </div>

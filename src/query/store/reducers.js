@@ -18,7 +18,8 @@ import {
     ACTION_SET_DEPART_TIME_START,
     ACTION_SET_DEPART_TIME_END,
     ACTION_SET_ARRIVE_TIME_START,
-    ACTION_SET_ARRIVE_TIME_END
+    ACTION_SET_ARRIVE_TIME_END,
+    ACTION_SET_IS_FILTERS_VISIBLE
 } from "./actions";
 
 export default {
@@ -171,7 +172,7 @@ export default {
         return state;
     },
     arriveTimeEnd(state = 0, action) {
-         const {type, value} = action;
+        const {type, value} = action;
 
         if(type === ACTION_SET_ARRIVE_TIME_END) {
             return value;
@@ -179,4 +180,12 @@ export default {
 
         return state;
     },
+    isFiltersVisible(state = false, action) {
+        const {type, value} = action;
+
+        if(type === ACTION_SET_IS_FILTERS_VISIBLE) {
+            return value;
+        }
+       return state;
+   },
 }

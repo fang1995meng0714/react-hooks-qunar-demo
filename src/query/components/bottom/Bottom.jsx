@@ -100,7 +100,8 @@ function BottomModal(props) {
         setDepartTimeStart,
         setDepartTimeEnd,
         setArriveTimeStart,
-        setArriveTimeEnd
+        setArriveTimeEnd,
+        toggleIsFiltersVisible
     } = props;
 
     const [
@@ -181,7 +182,9 @@ function BottomModal(props) {
         setDepartTimeEnd(localDepartTimeEnd);
 
         setArriveTimeStart(localArriveTimeStart);
-        setArriveTimeEnd(localArriveTimeEnd)
+        setArriveTimeEnd(localArriveTimeEnd);
+
+        toggleIsFiltersVisible()
     }
 
     const isResetDisabled = useMemo(() => {
@@ -280,7 +283,8 @@ BottomModal.propTypes = {
     setDepartTimeStart: PropTypes.func.isRequired,
     setDepartTimeEnd: PropTypes.func.isRequired,
     setArriveTimeStart: PropTypes.func.isRequired,
-    setArriveTimeEnd: PropTypes.func.isRequired
+    setArriveTimeEnd: PropTypes.func.isRequired,
+    toggleIsFiltersVisible: PropTypes.func.isRequired
 }
 
 function Bottom(props) {
@@ -310,7 +314,9 @@ function Bottom(props) {
             setDepartTimeStart,
             setDepartTimeEnd,
             setArriveTimeStart,
-            setArriveTimeEnd
+            setArriveTimeEnd,
+            isFiltersVisible,
+            toggleIsFiltersVisible
         } = props;
 
     return (
@@ -337,33 +343,40 @@ function Bottom(props) {
                     <i className="icon">{onlyTickets ? '\uf43d' : '\uf43c'}</i>
                     只看有票
                 </span>
-                <span className="item">
+                <span 
+                    className={classnames('item', { 'item-on': isFiltersVisible })}
+                    onClick={toggleIsFiltersVisible}    
+                >
                     <i className="icon">&#xf0f7;</i>
                     综合筛选
                 </span>
             </div>
-            <BottomModal 
-                ticketTypes={ticketTypes}
-                trainTypes={trainTypes}
-                checkedTicketTypes={checkedTicketTypes}
-                checkedTrainTypes={checkedTrainTypes}
-                departStations={departStations}
-                arriveStations={arriveStations}
-                checkedDepartStations={checkedDepartStations}
-                checkedArriveStations={checkedArriveStations}
-                departTimeStart={departTimeStart}
-                departTimeEnd={departTimeEnd}
-                arriveTimeStart={arriveTimeStart}
-                arriveTimeEnd={arriveTimeEnd}
-                setCheckedTicketTypes={setCheckedTicketTypes}
-                setCheckedTrainTypes={setCheckedTrainTypes}
-                setCheckedDepartStations={setCheckedDepartStations}
-                setCheckedArriveStations={setCheckedArriveStations}
-                setDepartTimeStart={setDepartTimeStart}
-                setDepartTimeEnd={setDepartTimeEnd}
-                setArriveTimeStart={setArriveTimeStart}
-                setArriveTimeEnd={setArriveTimeEnd}
-            />
+            {
+                isFiltersVisible &&
+                <BottomModal 
+                    ticketTypes={ticketTypes}
+                    trainTypes={trainTypes}
+                    checkedTicketTypes={checkedTicketTypes}
+                    checkedTrainTypes={checkedTrainTypes}
+                    departStations={departStations}
+                    arriveStations={arriveStations}
+                    checkedDepartStations={checkedDepartStations}
+                    checkedArriveStations={checkedArriveStations}
+                    departTimeStart={departTimeStart}
+                    departTimeEnd={departTimeEnd}
+                    arriveTimeStart={arriveTimeStart}
+                    arriveTimeEnd={arriveTimeEnd}
+                    setCheckedTicketTypes={setCheckedTicketTypes}
+                    setCheckedTrainTypes={setCheckedTrainTypes}
+                    setCheckedDepartStations={setCheckedDepartStations}
+                    setCheckedArriveStations={setCheckedArriveStations}
+                    setDepartTimeStart={setDepartTimeStart}
+                    setDepartTimeEnd={setDepartTimeEnd}
+                    setArriveTimeStart={setArriveTimeStart}
+                    setArriveTimeEnd={setArriveTimeEnd}
+                    toggleIsFiltersVisible={toggleIsFiltersVisible}
+                />
+            }
         </div>
     )
 }
@@ -377,6 +390,7 @@ Bottom.propTypes = {
     onlyTickets: PropTypes.bool.isRequired,
     departStations: PropTypes.array.isRequired,
     arriveStations: PropTypes.array.isRequired,
+    isFiltersVisible: PropTypes.bool.isRequired,
 
     ticketTypes: PropTypes.array.isRequired,
     trainTypes: PropTypes.array.isRequired,
@@ -394,7 +408,8 @@ Bottom.propTypes = {
     setDepartTimeStart: PropTypes.func.isRequired,
     setDepartTimeEnd: PropTypes.func.isRequired,
     setArriveTimeStart: PropTypes.func.isRequired,
-    setArriveTimeEnd: PropTypes.func.isRequired
+    setArriveTimeEnd: PropTypes.func.isRequired,
+    toggleIsFiltersVisible: PropTypes.func.isRequired
 }
 
 export default Bottom;
