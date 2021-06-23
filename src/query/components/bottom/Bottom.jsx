@@ -1,12 +1,9 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useState, useReducer, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Slider from '../slider/Slider.jsx';
 import {ORDER_DEPART} from "./../../store/actions";
 import './Bottom.css';
-import { useReducer } from 'react';
-import { useMemo } from 'react';
-import { rest } from 'lodash';
 
 const Filter = memo(function Filter(props) {
     const {name, checked, value, dispatch} = props;

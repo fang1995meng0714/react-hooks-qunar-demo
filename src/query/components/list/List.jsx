@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
+import URI from 'urijs';
 import "./List.css"
 
 function ListItem(props) {
@@ -10,12 +11,23 @@ function ListItem(props) {
         aStation,
         trainNumber,
         time,
+        date,
         priceMsg,
         dayAfter
     } = props;
+
+    const url = useMemo(() => {
+        return new URI('ticket.html')
+            .setSearch('aStation', aStation)
+            .setSearch('dStation', dStation)
+            .setSearch('trainNumber', trainNumber)
+            .setSearch('date', date)
+            .toString();
+    }, [aStation, dStation, trainNumber, date]);
+
     return (
         <div className="list-item">
-            <a href="">
+            <a href={url}>
                 <span className="item-time">
                     <em>{dTime}</em>
                     <br />
