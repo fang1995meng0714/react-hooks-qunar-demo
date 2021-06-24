@@ -75,7 +75,7 @@ function App(props) {
         dispatch(setTo(to));
         dispatch(setHighSpeed(highSpeed === 'true'));
         dispatch(setDepartDate(h0(dayjs(date).valueOf())))
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         const queryJson = {
@@ -132,7 +132,7 @@ function App(props) {
         departTimeEnd,
         arriveTimeStart,
         arriveTimeEnd,
-    ])
+    ]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const bottomCbs = useMemo(() => {
         return bindActionCreators({
@@ -149,7 +149,7 @@ function App(props) {
             setArriveTimeEnd,
             toggleIsFiltersVisible
         },dispatch)
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>

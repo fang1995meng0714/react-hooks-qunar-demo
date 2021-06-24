@@ -44,7 +44,7 @@ function App(props) {
         showCitySelector: showCitySelectorAction,
         changeFromTo:changeFromToAction
       }, dispatch);
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const action = fetchCityDataAction();
@@ -116,4 +116,4 @@ export default connect(
       }
     }
   }
-)(App)
+)(App);

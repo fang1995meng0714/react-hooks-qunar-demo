@@ -128,11 +128,11 @@ const Slider = memo(function Slider(props) {
 
     useEffect(() => {
         onStartChanged(startHours)
-    }, [startHours])
+    }, [startHours]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         onEndChanged(endHours)
-    }, [endHours])
+    }, [endHours])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="option">
