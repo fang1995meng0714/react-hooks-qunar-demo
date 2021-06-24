@@ -27,7 +27,9 @@ import {
     setDepartTimeEnd,
     setArriveTimeStart,
     setArriveTimeEnd,
-    toggleIsFiltersVisible
+    toggleIsFiltersVisible,
+    nextData,
+    prevData
 } from "./store/actions";
 import URI from 'urijs';
 import { bindActionCreators } from 'redux';
@@ -64,8 +66,11 @@ function App(props) {
         window.history.back();
     }, []);
 
-    const {isPrevDisabled, isNextDisabled} = useNav(
-        departDate
+    const {isPrevDisabled, isNextDisabled, prev, next} = useNav(
+        departDate,
+        dispatch,
+        nextData,
+        prevData
     )
 
     useEffect(() => {
@@ -160,6 +165,8 @@ function App(props) {
                 date={departDate}
                 isPrevDisabled={isPrevDisabled}
                 isNextDisabled={isNextDisabled}
+                prev={prev}
+                next={next}
             />
             <List list={trainList}/>
             <Bottom 

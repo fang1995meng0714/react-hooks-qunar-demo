@@ -6,7 +6,7 @@ import 'dayjs/locale/zh-cn';
 import './Nav.css';
 
 function Nav(props) {
-    const {date, isPrevDisabled, isNextDisabled} = props;
+    const {date, isPrevDisabled, isNextDisabled, prev, next} = props;
 
     const currentString = useMemo(() => {
         const d = dayjs(date);
@@ -15,7 +15,8 @@ function Nav(props) {
     
     return (
         <div className="nav">
-            <span 
+            <span
+                onClick={prev}
                 className={classnames("nav-prev", {
                     'nav-disabled':  isPrevDisabled
                 })}
@@ -24,6 +25,7 @@ function Nav(props) {
             </span>
             <span className="nav-current">{currentString}</span>
             <span 
+                onClick={next}
                 className={classnames("nav-next", {
                     'nav-disabled':  isNextDisabled
                 })}
@@ -37,5 +39,9 @@ function Nav(props) {
 export default Nav;
 
 Nav.propTypes = {
-    date: PropTypes.number.isRequired
+    date: PropTypes.number.isRequired,
+    prev: PropTypes.func.isRequired,
+    next: PropTypes.func.isRequired,
+    isPrevDisabled: PropTypes.bool.isRequired,
+    isNextDisabled: PropTypes.bool.isRequired,
 }

@@ -1,3 +1,6 @@
+import { h0 } from '../../common/fp';
+
+
 export const ORDER_DEPART = 1;
 export const ORDER_DURATION = 2;
 export const ACTION_SET_FROM = "ACTION_SET_FROM";
@@ -182,5 +185,21 @@ export function toggleIsFiltersVisible() {
             type: ACTION_SET_IS_FILTERS_VISIBLE,
             value: !isFiltersVisible,
         })
+    }
+}
+
+export function nextData() {
+    return (dispatch, getState) => {
+        const {departDate} = getState();
+
+        dispatch(setDepartDate(h0(departDate) + 86400 * 1000 ));
+    }
+}
+
+export function prevData() {
+    return (dispatch, getState) => {
+        const {departDate} = getState();
+
+        dispatch(setDepartDate(h0(departDate) - 86400 * 1000 ));
     }
 }
