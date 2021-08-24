@@ -87,8 +87,8 @@ module.exports = Mock.mock('/rest/ticket', 'post', (options) => {
     return json
 })
 
-module.exports = Mock.mock('/rest/schedule', 'GET', (options) => {
-    return options.json([{
+module.exports = Mock.mock('/rest/schedule', 'post', (options) => {
+    const json = [{
         station: '北京南',
         arriveTime: null,
         departTime: '07:20',
@@ -108,7 +108,9 @@ module.exports = Mock.mock('/rest/schedule', 'GET', (options) => {
         arriveTime: '13:08',
         departTime: null,
         stay: null,
-    }]);
+    }];
+
+    return json;
 })
 
 module.exports = Mock.mock('/rest/order', 'GET', (options) => {

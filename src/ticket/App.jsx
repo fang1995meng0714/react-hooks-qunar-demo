@@ -3,6 +3,7 @@ import Header from "./../components/header/Header";
 import Detail from '../components/detail/Detail.jsx';
 import './App.css';
 import Candidate from './components/candidate/Candidate';
+import Schedule from './components/schedule/Schedule';
 import axios from 'axios';
 import "../mock/mocker";
 import { connect } from 'react-redux';
@@ -19,6 +20,7 @@ import {
     setDurationStr
 } from './store/actions';
 import { h0 } from '../common/fp';
+
 
 function App(props) {
     const {
@@ -97,7 +99,7 @@ function App(props) {
                 >
                     <span className="left"></span>
                     <span
-                        className="schedule"
+                         className="schedule"
                         
                     >
                         时刻表
@@ -106,6 +108,12 @@ function App(props) {
                 </Detail>
             </div>
             <Candidate />
+            <Schedule
+                date={departDate}
+                trainNumber={trainNumber}
+                departStation={departStation}
+                arriveStation={arriveStation}
+            />
         </div>
     )
 }

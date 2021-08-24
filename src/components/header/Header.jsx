@@ -23,5 +23,5 @@ export default function Header(props) {
 
 Header.propTypes = {
     onBack: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string
 }
