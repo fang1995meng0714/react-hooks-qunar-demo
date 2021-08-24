@@ -7,7 +7,12 @@ export default createStore(
     combineReducers(reducers), {
         departDate: Date.now(),
         arriveDate: Date.now(),
+        trainNumber: null,
+        departStation: null,
+        arriveStation: null,
         departTimeStr: "",
-        arriveTimeStr: ""
-    }
+        arriveTimeStr: "",
+        durationStr: null,
+    },
+    applyMiddleware(thunk)
 )
