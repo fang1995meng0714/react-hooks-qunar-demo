@@ -25,6 +25,11 @@ function App(props) {
         departDate,
         trainNumber,
         arriveDate,
+        departTimeStr,
+        arriveTimeStr,
+        departStation,
+        arriveStation,
+        durationStr,
         dispatch
     } = props
 
@@ -42,6 +47,10 @@ function App(props) {
         dispatch(setTrainNumber(trainNumber));
         dispatch(setDepartDate(h0(dayjs(date).valueOf())));
     }, [])
+
+    useEffect(() => {
+        document.title = trainNumber;
+    }, [trainNumber])
 
     useEffect(() => {  
         let obj= {
@@ -70,14 +79,31 @@ function App(props) {
     return (
         <div className="app">
             <div className="header-wrapper">
-                <Header title="432" onBack={onBack}/>
+                <Header title={trainNumber} onBack={onBack}/>
             </div>
             <div className="nav-wrapper">
                 232424
             </div>
             <div className="detail-wrapper">
-                <Detail 
-                />
+                <Detail
+                    departDate={departDate}
+                    arriveDate={arriveDate}
+                    departTimeStr={departTimeStr}
+                    arriveTimeStr={arriveTimeStr}
+                    trainNumber={trainNumber}
+                    departStation={departStation}
+                    arriveStation={arriveStation}
+                    durationStr={durationStr}
+                >
+                    <span className="left"></span>
+                    <span
+                        className="schedule"
+                        
+                    >
+                        时刻表
+                    </span>
+                    <span className="right"></span>
+                </Detail>
             </div>
             <Candidate />
         </div>
