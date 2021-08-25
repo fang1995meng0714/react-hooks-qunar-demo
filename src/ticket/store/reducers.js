@@ -6,7 +6,8 @@ import {
     ACTION_SET_ARRIVE_TIME_STR,
     ACTION_SET_DEPART_STATION,
     ACTION_SET_ARRIVE_STATION,
-    ACTION_SET_DURATION_STR 
+    ACTION_SET_DURATION_STR,
+    ACTION_SET_IS_SCHEDULE_VISIBLE
 } from "./actions";
 
 export default {
@@ -82,4 +83,12 @@ export default {
 
         return state;
     },
+    isScheduleVisible(state=false, action) {
+        const {type, payload} = action;
+
+        if(type === ACTION_SET_IS_SCHEDULE_VISIBLE) {
+            return payload;
+        }
+       return state;
+   }
 }

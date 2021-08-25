@@ -6,6 +6,7 @@ export const ACTION_SET_DEPART_STATION = 'SET_DEPART_STATION';
 export const ACTION_SET_ARRIVE_STATION = 'SET_ARRIVE_STATION';
 export const ACTION_SET_ARRIVE_TIME_STR = 'SET_ARRIVE_TIME_STR';
 export const ACTION_SET_DEPART_TIME_STR = 'SET_DEPART_TIME_STR';
+export const ACTION_SET_IS_SCHEDULE_VISIBLE = 'SET_IS_SCHEDULE_VISIBLE';
 
 export function setDepartDate(departDate) {
     return {
@@ -54,4 +55,17 @@ export function setArriveTimeStr(arriveTimeStr) {
         type: ACTION_SET_ARRIVE_TIME_STR,
         payload: arriveTimeStr,
     };
+}
+export function setIsScheduleVisible(isScheduleVisible) {
+    return {
+        type: ACTION_SET_IS_SCHEDULE_VISIBLE,
+        payload: isScheduleVisible,
+    }
+}
+export function toggleIsScheduleVisible() {
+    return (dispatch, getState) => {
+        const { isScheduleVisible } = getState();
+
+        dispatch(setIsScheduleVisible(!isScheduleVisible));
+    }
 }

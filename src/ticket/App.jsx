@@ -17,10 +17,11 @@ import {
     setDepartStation, 
     setDepartTimeStr,
     setArriveTimeStr,
-    setDurationStr
+    setDurationStr,
+    toggleIsScheduleVisible
 } from './store/actions';
 import { h0 } from '../common/fp';
-
+import { bindActionCreators } from 'redux';
 
 function App(props) {
     const {
@@ -32,6 +33,7 @@ function App(props) {
         departStation,
         arriveStation,
         durationStr,
+        isScheduleVisible,
         dispatch
     } = props
 
@@ -78,6 +80,13 @@ function App(props) {
         })
     }, [departDate, trainNumber])
 
+    const detailCbs = bindActionCreators(
+        {
+            toggleIsScheduleVisible
+        },
+        dispatch
+    )
+
     return (
         <div className="app">
             <div className="header-wrapper">
@@ -99,8 +108,8 @@ function App(props) {
                 >
                     <span className="left"></span>
                     <span
-                         className="schedule"
-                        
+                        className="schedule"
+                        onClick={() => detailCbs.toggleIsScheduleVisible()}
                     >
                         时刻表
                     </span>
@@ -108,12 +117,19 @@ function App(props) {
                 </Detail>
             </div>
             <Candidate />
-            <Schedule
-                date={departDate}
-                trainNumber={trainNumber}
-                departStation={departStation}
-                arriveStation={arriveStation}
-            />
+            {isScheduleVisible && 
+                <div 
+                    className="mask"
+                    onClick={() => dispatch(toggleIsScheduleVisible())}
+                >
+                    <Schedule
+                        date={departDate}
+                        trainNumber={trainNumber}
+                        departStation={departStation}
+                        arriveStation={arriveStation}
+                    />
+                </div>
+            }
         </div>
     )
 }
