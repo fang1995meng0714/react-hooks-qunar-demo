@@ -9,6 +9,8 @@ import "../mock/mocker";
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import URI from 'urijs';
+import Nav from '../components/nav/Nav';
+import useNav from '../costom-hooks/useNav';
 import { 
     setArriveDate, 
     setDepartDate, 
@@ -19,6 +21,8 @@ import {
     setArriveTimeStr,
     setDurationStr,
     setTickets,
+    prevDate,
+    nextDate,
     toggleIsScheduleVisible
 } from './store/actions';
 import { h0 } from '../common/fp';
@@ -92,13 +96,26 @@ function App(props) {
         dispatch
     )
 
+    const { isPrevDisabled, isNextDisabled, prev, next } = useNav(
+        departDate,
+        dispatch,
+        nextDate,
+        prevDate,
+    );
+
     return (
         <div className="app">
             <div className="header-wrapper">
                 <Header title={trainNumber} onBack={onBack}/>
             </div>
             <div className="nav-wrapper">
-                232424
+                <Nav
+                    date={departDate}
+                    isPrevDisabled={isPrevDisabled}
+                    isNextDisabled={isNextDisabled}
+                    prev={prev}
+                    next={next}
+                />
             </div>
             <div className="detail-wrapper">
                 <Detail
