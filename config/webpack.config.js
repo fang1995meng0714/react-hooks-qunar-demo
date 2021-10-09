@@ -568,6 +568,33 @@ module.exports = function(webpackEnv) {
       ),
       new HtmlWebpackPlugin(
         Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appQueryHtml,
+            filename: 'order.html',
+            chunks: ['order'],
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
+      new HtmlWebpackPlugin(
+        Object.assign(
             {},
             {
                 inject: true,
