@@ -13,7 +13,8 @@ export default createStore(
         departTimeStr: "",
         arriveTimeStr: "",
         durationStr: null,
-        isScheduleVisible: false
+        isScheduleVisible: false,
+        tickets: []
     },
     applyMiddleware(thunk)
 )

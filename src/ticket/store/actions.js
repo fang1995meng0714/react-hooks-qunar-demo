@@ -7,6 +7,7 @@ export const ACTION_SET_ARRIVE_STATION = 'SET_ARRIVE_STATION';
 export const ACTION_SET_ARRIVE_TIME_STR = 'SET_ARRIVE_TIME_STR';
 export const ACTION_SET_DEPART_TIME_STR = 'SET_DEPART_TIME_STR';
 export const ACTION_SET_IS_SCHEDULE_VISIBLE = 'SET_IS_SCHEDULE_VISIBLE';
+export const ACTION_SET_TICKETS = 'SET_TICKETS';
 
 export function setDepartDate(departDate) {
     return {
@@ -68,4 +69,10 @@ export function toggleIsScheduleVisible() {
 
         dispatch(setIsScheduleVisible(!isScheduleVisible));
     }
+}
+export function setTickets(tickets) {
+    return {
+        type: ACTION_SET_TICKETS,
+        payload: tickets,
+    };
 }

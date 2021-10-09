@@ -1,26 +1,74 @@
-import React  from 'react';
+import React, { memo, useState, useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import './Candidate.css';
+import { TrainContext } from '../../context';
+
+function Channel(props) {
+    const {name, desc, type} = props;
+    const {
+        trainNumber,
+        departStation,
+        arriveStation,
+        departDate,
+    } = useContext(TrainContext);
+    const src = useMemo(() => {
+        let src = `order.html?trainNumber=${trainNumber}&dStation=${departStation}&aStation=${arriveStation}&type=${type}&date=${dayjs(departDate).format('YYYY-MM-DD')}`;
+        return src;
+    }, [type, trainNumber, departStation, arriveStation, departDate])
+
+    return (
+        <div className="channel">
+            <div className="middle">
+                <div className="name">{name}</div>
+                <div className="desc">{desc}</div>
+            </div>
+            <a href={src} className="buy-wrapper">
+                <div className="buy">买票</div>
+            </a>
+        </div>
+    )
+}
+
+Channel.propTypes = {
+    name: PropTypes.string.isRequired,
+    desc: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+};
 
 function Seat(props) {
     const {
         type,
-        priceMsg
+        priceMsg,
+        expanded,
+        onToggle,
+        idx,
+        ticketsLeft,
+        channels
     } = props;
-
+    console.log(props)
     return(
         <li>
-            <div className="bar">
+            <div className="bar" onClick={() => onToggle(idx)}>
                 <span className="seat">{type}</span>
                 <span className="price">
                     <i>￥</i>
                     {priceMsg}
                 </span>
-                <span className="btn">预定</span>
-                <span className="num">5张</span>
+                <span className="btn">{expanded ? "预定" : "收起"}</span>
+                <span className="num">{ticketsLeft}</span>
             </div>
-            <div className="channels">
-                
+            <div 
+                className="channels"
+                style={{height: expanded ? channels.length * 55 + "px" : 0}}
+            >
+                {
+                    channels.map(channel => {
+                        return (
+                            <Channel key={channel.name} {...channel} type={type}/>
+                        )
+                    })
+                }
             </div>
         </li>
     )
@@ -31,27 +79,17 @@ Seat.propTypes = {
    priceMsg: PropTypes.string.isRequired,
 }
 
-function Candidate() {
-    const tickets = [
-        {
-            id:0,
-            priceMsg: "443.5",
-            ticketsLeft: "有票",
-            type: "yi等座",
+function Candidate(props) {
+    const {tickets} = props;
+
+    const [expandedIndex, setExpandedIndex] = useState(-1);
+
+    const onToggle = useCallback(
+        idx => {
+            setExpandedIndex(idx === expandedIndex ? -1 : idx)
         },
-        {
-            id:1,
-            priceMsg: "443.5",
-            ticketsLeft: "有票",
-            type: "二等座",
-        },
-        {
-            id:2,
-            priceMsg: "443.5",
-            ticketsLeft: "有票",
-            type: "s等座",
-        }
-    ]
+        [expandedIndex]
+    );
 
     return (
         <div className="candidate">
@@ -61,6 +99,8 @@ function Candidate() {
                         <Seat 
                             idx={index}
                             {...ticket}
+                            expanded={expandedIndex === index}
+                            onToggle={onToggle}
                             key={ticket.type}
                         />
                     )

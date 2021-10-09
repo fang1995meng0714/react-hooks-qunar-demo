@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import dayjs from 'dayjs';
 import classnames from 'classnames';
 import leftPad from 'left-pad';
 import './Schedule.css';
@@ -14,7 +13,6 @@ function ScheduleRow(props) {
         arriveTime,
         departTime,
         stay,
-
         isStartStation,
         isEndStation,
         isDepartStation,

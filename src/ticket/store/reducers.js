@@ -7,7 +7,8 @@ import {
     ACTION_SET_DEPART_STATION,
     ACTION_SET_ARRIVE_STATION,
     ACTION_SET_DURATION_STR,
-    ACTION_SET_IS_SCHEDULE_VISIBLE
+    ACTION_SET_IS_SCHEDULE_VISIBLE,
+    ACTION_SET_TICKETS
 } from "./actions";
 
 export default {
@@ -90,5 +91,15 @@ export default {
             return payload;
         }
        return state;
+   },
+   tickets(state=[], action) {
+        const { type, payload } = action;
+        switch (type) {
+            case ACTION_SET_TICKETS:
+                return payload;
+            default:
+        }
+
+        return state;
    }
 }

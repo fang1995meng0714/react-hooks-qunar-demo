@@ -18,10 +18,12 @@ import {
     setDepartTimeStr,
     setArriveTimeStr,
     setDurationStr,
+    setTickets,
     toggleIsScheduleVisible
 } from './store/actions';
 import { h0 } from '../common/fp';
 import { bindActionCreators } from 'redux';
+import { TrainContext } from './context';
 
 function App(props) {
     const {
@@ -34,6 +36,7 @@ function App(props) {
         arriveStation,
         durationStr,
         isScheduleVisible,
+        tickets,
         dispatch
     } = props
 
@@ -61,10 +64,11 @@ function App(props) {
             date:  dayjs(departDate).format('YYYY-MM-DD'),
             trainNumber
         }
-        console.log(obj)
+
         axios.post("/rest/ticket", JSON.stringify(obj))
         .then((res) => {
             const data = res.data;
+            console.log(data);
             const { detail, candidates } = data;
             const {
                 departTimeStr,
@@ -77,6 +81,7 @@ function App(props) {
             dispatch(setArriveTimeStr(arriveTimeStr));
             dispatch(setArriveDate(arriveDate));
             dispatch(setDurationStr(durationStr));
+            dispatch(setTickets(candidates));
         })
     }, [departDate, trainNumber])
 
@@ -116,7 +121,16 @@ function App(props) {
                     <span className="right"></span>
                 </Detail>
             </div>
-            <Candidate />
+            <TrainContext.Provider
+                value={{
+                    trainNumber,
+                    departStation,
+                    arriveStation,
+                    departDate,
+                }}
+            >
+                <Candidate tickets={tickets} />
+            </TrainContext.Provider>
             {isScheduleVisible && 
                 <div 
                     className="mask"

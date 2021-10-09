@@ -155,11 +155,11 @@ module.exports = function(webpackEnv) {
             isEnvDevelopment &&
                 require.resolve('react-dev-utils/webpackHotDevClient'),
         ].filter(Boolean),
-        // order: [
-        //     paths.appOrderJs,
-        //     isEnvDevelopment &&
-        //         require.resolve('react-dev-utils/webpackHotDevClient'),
-        // ].filter(Boolean),
+        order: [
+            paths.appOrderJs,
+            isEnvDevelopment &&
+                require.resolve('react-dev-utils/webpackHotDevClient'),
+        ].filter(Boolean),
     },
     output: {
       // The build folder.
