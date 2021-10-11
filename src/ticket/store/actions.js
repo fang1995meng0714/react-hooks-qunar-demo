@@ -1,4 +1,3 @@
-import { func } from "prop-types";
 import { h0 } from "../../common/fp";
 
 export const ACTION_SET_DEPART_DATE = 'SET_DEPART_DATE';
