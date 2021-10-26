@@ -4,7 +4,10 @@ import {
     ACTION_SET_ARRIVE_STATION,
     ACTION_SET_SEAT_TYPE,
     ACTION_SET_DEPART_DATE,
-    ACTION_SET_ARRIVE_DATE
+    ACTION_SET_DURATION_STR,
+    ACTION_SET_ARRIVE_DATE,
+    ACTION_SET_DEPART_TIME_STR,
+    ACTION_SET_ARRIVE_TIME_STR,
 } from "./actions";
 
 export default {
@@ -56,30 +59,43 @@ export default {
         return state;
     },
     arriveDate(state = null, action) {
-        const {type, payload} = action;
-        switch(type) {
+        const { type, payload } = action;
+        switch (type) {
             case ACTION_SET_ARRIVE_DATE:
                 return payload;
             default:
         }
+
         return state;
     },
     departTimeStr(state = null, action) {
-        const {type, payload} = action;
-        switch(type) {
-            case ACTION_SET_ARRIVE_DATE:
+        const { type, payload } = action;
+        switch (type) {
+            case ACTION_SET_DEPART_TIME_STR:
                 return payload;
             default:
         }
+
         return state;
     },
     arriveTimeStr(state = null, action) {
-        const {type, payload} = action;
-        switch(type) {
-            case ACTION_SET_ARRIVE_DATE:
+        const { type, payload } = action;
+        switch (type) {
+            case ACTION_SET_ARRIVE_TIME_STR:
                 return payload;
             default:
         }
+
         return state;
     },
+    durationStr(state = null, action) {
+        const { type, payload } = action;
+        switch (type) {
+            case ACTION_SET_DURATION_STR:
+                return payload;
+            default:
+        }
+
+        return state;
+    }
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import "../../mock/mocker";
 export const ACTION_SET_TRAIN_NUMBER = 'SET_TRAIN_NUMBER';
 export const ACTION_SET_DEPART_STATION = 'SET_DEPART_STATION';
 export const ACTION_SET_ARRIVE_STATION = 'SET_ARRIVE_STATION';
@@ -71,24 +71,4 @@ export function setPrice(price) {
         type: ACTION_SET_PRICE,
         payload: price,
     };
-}
-export function fetchInitial(url, obj) {
-    return (dispatch, getState) => {
-        axios.post(url, JSON.stringify(obj))
-        .then((res) => {
-            const {
-                departTimeStr,
-                arriveTimeStr,
-                arriveDate,
-                durationStr,
-                price,
-            } = res.data;
-
-            dispatch(setDepartTimeStr(departTimeStr));
-            dispatch(setArriveTimeStr(arriveTimeStr));
-            dispatch(setArriveDate(arriveDate));
-            dispatch(setDurationStr(durationStr));
-            dispatch(setPrice(price));
-        })
-    }
 }

@@ -15,9 +15,10 @@ import {
     setArriveTimeStr,
     setArriveDate,
     setDurationStr,
-    fetchInitial
+    setDepartTimeStr,
+    setPrice
 } from "./store/actions";
-import { setDepartTimeStr } from '../ticket/store/actions';
+import axios from 'axios';
 
 
 function App(props) {
@@ -48,7 +49,7 @@ function App(props) {
         dispatch(setArriveStation(aStation));
         dispatch(setSeatType(type));
         dispatch(setDepartDate(dayjs(date).valueOf()));
-    })
+    },[])
 
     useEffect(() => {
         document.title = trainNumber;
@@ -62,7 +63,21 @@ function App(props) {
             date: dayjs(departDate).format('YYYY-MM-DD')
         }
         const url = "/rest/order";
-        fetchInitial(url, obj)
+        axios.post(url, JSON.stringify(obj)).then(res => {
+            const {
+                departTimeStr,
+                arriveTimeStr,
+                arriveDate,
+                durationStr,
+                price,
+            } = res.data;
+            
+            dispatch(setDepartTimeStr(departTimeStr));
+            dispatch(setArriveTimeStr(arriveTimeStr));
+            dispatch(setArriveDate(arriveDate));
+            dispatch(setDurationStr(durationStr));
+            dispatch(setPrice(price));
+        })
     }, [departStation, arriveStation, seatType, departDate])
 
     return (
@@ -70,7 +85,7 @@ function App(props) {
             <div className="header-wrapper">
                 <Header title="订单填写" onBack={onBack} />
             </div>
-            <div>
+            <div className="detail-wrapper">
                 <Detail 
                      departDate={departDate}
                      arriveDate={arriveDate}
@@ -80,7 +95,12 @@ function App(props) {
                      departStation={departStation}
                      arriveStation={arriveStation}
                      durationStr={durationStr}
-                />
+                >
+                    <span
+                        style={{ display: 'block' }}
+                        className="train-icon"
+                    ></span>
+                </Detail>
             </div>
         </div>
     )
