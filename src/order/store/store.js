@@ -6,7 +6,14 @@ import thunk from "redux-thunk";
 export default createStore(
     combineReducers(reducers),
     {
-        trainNumber: null
+        trainNumber: null,
+        departStation: null,
+        arriveStation: null,
+        seatType: null,
+        departDate: Date.now(),
+        arriveDate: Date.now(),
+        departTimeStr: null,
+        arriveTimeStr: null
     },
     applyMiddleware(thunk)
 )

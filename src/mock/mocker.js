@@ -113,14 +113,14 @@ module.exports = Mock.mock('/rest/schedule', 'post', (options) => {
     return json;
 })
 
-module.exports = Mock.mock('/rest/order', 'GET', (options) => {
-    const { date } = options.query;
-        
-        return options.json({
+module.exports = Mock.mock('/rest/order', 'post', (options) => {
+    const body = JSON.parse(options.body);
+    const {date} = body;
+        return {
             departTimeStr: '07:15',
             arriveTimeStr: '11:47',
             arriveDate: dayjs(date).valueOf(),
             durationStr: '4小时32分',
             price: 483.5,
-        });
+        };
 })
