@@ -19,6 +19,7 @@ import {
     setPrice
 } from "./store/actions";
 import axios from 'axios';
+import Ticket from './components/ticket/Ticket';
 
 
 function App(props) {
@@ -32,7 +33,8 @@ function App(props) {
         arriveDate,
         departTimeStr,
         arriveTimeStr,
-        durationStr
+        durationStr,
+        price
     } = props;
     
 
@@ -101,6 +103,7 @@ function App(props) {
                         className="train-icon"
                     ></span>
                 </Detail>
+                <Ticket price={price} type={seatType}></Ticket>
             </div>
         </div>
     )

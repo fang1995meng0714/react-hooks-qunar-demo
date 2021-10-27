@@ -8,6 +8,7 @@ import {
     ACTION_SET_ARRIVE_DATE,
     ACTION_SET_DEPART_TIME_STR,
     ACTION_SET_ARRIVE_TIME_STR,
+    ACTION_SET_PRICE
 } from "./actions";
 
 export default {
@@ -82,6 +83,16 @@ export default {
         const { type, payload } = action;
         switch (type) {
             case ACTION_SET_ARRIVE_TIME_STR:
+                return payload;
+            default:
+        }
+
+        return state;
+    },
+    price(state = null, action) {
+        const { type, payload } = action;
+        switch (type) {
+            case ACTION_SET_PRICE:
                 return payload;
             default:
         }

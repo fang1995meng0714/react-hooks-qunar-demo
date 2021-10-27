@@ -13,7 +13,8 @@ export default createStore(
         departDate: Date.now(),
         arriveDate: Date.now(),
         departTimeStr: null,
-        arriveTimeStr: null
+        arriveTimeStr: null,
+        price:0
     },
     applyMiddleware(thunk)
 )
