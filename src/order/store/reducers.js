@@ -8,7 +8,8 @@ import {
     ACTION_SET_ARRIVE_DATE,
     ACTION_SET_DEPART_TIME_STR,
     ACTION_SET_ARRIVE_TIME_STR,
-    ACTION_SET_PRICE
+    ACTION_SET_PRICE,
+    ACTION_SET_PASSENGERS
 } from "./actions";
 
 export default {
@@ -103,6 +104,17 @@ export default {
         const { type, payload } = action;
         switch (type) {
             case ACTION_SET_DURATION_STR:
+                return payload;
+            default:
+        }
+
+        return state;
+    },
+    passengers(state=[], action) {
+        const {type, payload} = action;
+        switch(type) {
+            case ACTION_SET_PASSENGERS:
+                console.log(payload)
                 return payload;
             default:
         }

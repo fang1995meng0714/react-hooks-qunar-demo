@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect}  from 'react';
+import React, {useCallback, useEffect, useMemo}  from 'react';
 import Header from "./../components/header/Header";
 import Detail from '../components/detail/Detail.jsx';
 import './App.css';
@@ -16,10 +16,16 @@ import {
     setArriveDate,
     setDurationStr,
     setDepartTimeStr,
-    setPrice
+    setPrice,
+    createAdult,
+    createChild,
+    updatePassenger
 } from "./store/actions";
 import axios from 'axios';
 import Ticket from './components/ticket/Ticket';
+import Passengers from './components/passengers/Passengers.jsx';
+import Choose from './components/choose/Choose.jsx';
+import { bindActionCreators } from 'redux';
 
 
 function App(props) {
@@ -34,7 +40,8 @@ function App(props) {
         departTimeStr,
         arriveTimeStr,
         durationStr,
-        price
+        price,
+        passengers,
     } = props;
     
 
@@ -80,7 +87,18 @@ function App(props) {
             dispatch(setDurationStr(durationStr));
             dispatch(setPrice(price));
         })
-    }, [departStation, arriveStation, seatType, departDate])
+    }, [departStation, arriveStation, seatType, departDate]);
+
+    const passengersCbs = useMemo(() => {
+        return bindActionCreators(
+            {
+                createAdult,
+                createChild,
+                updatePassenger
+            },
+            dispatch
+        )
+    }, [])
 
     return (
         <div className="app">
@@ -103,7 +121,11 @@ function App(props) {
                         className="train-icon"
                     ></span>
                 </Detail>
-                <Ticket price={price} type={seatType}></Ticket>
+                <Ticket price={price} type={seatType} />
+                <Passengers passengers={passengers} {...passengersCbs}/>
+                {passengers.length > 0 && (
+                    <Choose passengers={passengers}/>
+                )}
             </div>
         </div>
     )

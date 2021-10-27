@@ -14,7 +14,8 @@ export default createStore(
         arriveDate: Date.now(),
         departTimeStr: null,
         arriveTimeStr: null,
-        price:0
+        price:0,
+        passengers: []
     },
     applyMiddleware(thunk)
 )
